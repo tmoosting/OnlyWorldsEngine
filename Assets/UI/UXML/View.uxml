@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 2px; margin-top: 2px; flex-shrink: 0;">
+        <ui:VisualElement name="Controls" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: auto; margin-top: 4px; margin-right: 0; margin-left: 2px;">
+            <ui:Label tabindex="-1" text="WorldName" display-tooltip-when-elided="true" name="labelWorldName" style="-unity-font-style: bold; font-size: 15px; margin-bottom: 4px;" />
+            <ui:VisualElement name="DropdownCombo" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-self: auto; align-items: center;">
+                <ui:Label tabindex="-1" text="Table" display-tooltip-when-elided="true" style="-unity-font-style: normal; font-size: 14px;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdownTableSelect" style="flex-grow: 1; height: 25px; font-size: 13px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Database" style="flex-grow: 1; background-color: rgba(96, 200, 54, 0); height: 160px; flex-shrink: 0;">
+            <ui:VisualElement name="ListRoot" style="flex-grow: 1; background-color: rgba(241, 161, 26, 0); flex-shrink: 0;">
+                <ui:VisualElement name="containerListView" style="flex-grow: 1; background-color: rgba(196, 196, 196, 0); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px; flex-shrink: 0; width: auto; height: auto;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

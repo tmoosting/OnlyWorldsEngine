@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="ListRow" style="justify-content: center; height: 35px;">
+        <ui:VisualElement name="Row" style="flex-direction: row; align-items: center;">
+            <ui:VisualElement name="iconElement" style="width: 20px; height: 20px; background-image: url(&apos;project://database/Assets/UnityDefaultRuntimeTheme.tss?fileID=4154780841294389669&amp;guid=87ddfedbefb41aa4ebbcb5fa5d35bc7e&amp;type=3#arrow-down&apos;); margin-left: 5px;" />
+            <ui:Label text="ID" display-tooltip-when-elided="true" name="idElement" style="flex-grow: 1; margin-left: 8px; margin-right: 16px; color: rgb(226, 226, 226); font-size: 14px; max-width: 30px; min-width: 30px;" />
+            <ui:Label text="Name" display-tooltip-when-elided="true" name="nameElement" style="flex-grow: 0; margin-left: 8px; margin-right: 2px; color: rgb(226, 226, 226); font-size: 14px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

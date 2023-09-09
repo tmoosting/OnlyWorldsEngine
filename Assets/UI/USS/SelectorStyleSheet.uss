@@ -1,0 +1,118 @@
+ 
+
+.topSelector {
+    margin-top: 1px; 
+    border-width: 1px;
+    border-color: silver;
+    border-radius: 1px;
+    opacity: 0.9;
+    transition: background-color 0.1s;
+}
+
+.categorySelector {
+    margin-top: 2px; 
+    border-width: 1px;
+    border-color: silver;
+    border-radius: 1px;
+    opacity: 0.85;
+    transition: background-color 0.1s;
+}
+
+.elementSelector {
+    margin-top: 2px; 
+    border-width: 1px;
+    border-color: darkgrey;
+    border-radius: 1px;
+    opacity: 0.8;
+    transition: background-color 0.1s;
+}
+.inputBox {
+    border-width: 1px;
+    border-color: darkgrey;
+    border-radius: 1px;
+    padding: 4px;
+    margin-top: 1px;
+    margin-left: 0;
+    margin-right: 0;
+    color: white; 
+    transition: background-color 0.1s;
+}
+
+.backgroundContainer{
+    border-width: 1px;
+    border-color: darkgrey;  
+    margin-top: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    transition: background-color 0.1s;    
+}
+.resultRow {
+    border-radius: 2px;
+    padding: 2px;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    color: white;
+    transition: background-color 0.05s;
+}
+.whiteButton {
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: white;
+    color: white;
+    margin: 0px;
+    transition: border-color 0.2s, transform 0.1s;   
+}
+
+.whiteButton:hover {
+    border-color: #d0d0d0; /* A brighter shade of white */ 
+}
+
+.whiteButton:active {
+    /*    border-width: 2px; Increases the border when pressed */
+    /*   margin: -1px; Adjust the margin to ensure the button doesn't seem to move */
+}
+.whiteToggleOn {
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: white; 
+    margin: 0px;
+    transition: border-color 0.1s, transform 0.1s;
+}
+
+.whiteToggleOff {
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: black; 
+    margin: 0px;
+    transition: border-color 0.1s, transform 0.1s;
+}
+
+.whiteToggleOn:hover, .whiteToggleOff:hover {
+/*  border-color: #d0d0d0; */
+}
+.unity-base-field:focus .clickLabel{
+    color: darkred;
+}
+.subContainer {
+    background-color: #34495E; /* Slightly lighter blue */
+
+/*    !* Inset shadow for the top-left *!
+    text-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+    !* Outer shadow for the bottom-right *!
+    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.1);*/
+}
+/*
+.imageChooser > .iconPanel {
+    background-color: white;
+    border: 1px solid #ddd; !* A light grey border for added effect *!
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); !* Shadow effect *!
+    width: 24px; !* Adjust width and height to accommodate imageElement and padding *!
+    height: 24px;
+    padding: 2px; !* Padding to create space between the icon and its background *!
+    align-items: center;
+    justify-content: center;
+}
+*/
+

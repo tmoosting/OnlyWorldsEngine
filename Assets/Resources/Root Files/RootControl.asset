@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6525d2bf1d233e4d85512673c6ebd63, type: 3}
+  m_Name: RootControl
+  m_EditorClassIdentifier: 
+  infoMode: 1
+  blueDropdownHeight: 22
+  dropdownHeight: 22
+  dropdownWidth: 110
+  dropdownArrow: {fileID: 21300000, guid: b7400ae8675554d41a89d896b82c4b6c, type: 3}
+  toggleArrow: {fileID: 21300000, guid: 38f4f9e51fcb93f43a7f0f9668a1cb37, type: 3}
+  maskfieldArrow: {fileID: 21300000, guid: 38f4f9e51fcb93f43a7f0f9668a1cb37, type: 3}
+  dropdownArrowSize: 8
+  buttonWidth: 60
+  buttonHeight: 18
+  toggleWidth: 72
+  toggleHeight: 20.1
+  toggleIconSize: 8
+  clickLabelHeight: 16
+  toggleLeftMargin: 110
+  EditFieldHeight: 18
+  textfieldLeftMargin: 130
+  sliderLeftMargin: 100
+  frontLabelLeftMargin: 80
+  imageChooserSize: 24
+  imageChooserBackgroundColor: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 0.6313726}
+  generalBackgroundColor: {r: 0.43854573, g: 0.600154, b: 0.6886792, a: 0.30588236}
+  BlueElementColor: {r: 0.19215687, g: 0.5137255, b: 0.6901961, a: 0.56078434}
+  SearchColorInside: {r: 0.18823531, g: 0.6313726, b: 0.6039216, a: 0.043137256}
+  ResultsColorContainer: {r: 0.16078432, g: 0.24313727, b: 0.35686275, a: 0.43137255}
+  ResultsColorFilterLeft: {r: 0.23137257, g: 0.54509807, b: 0.62352943, a: 0.62352943}
+  ResultsColorFilterRight: {r: 0.28627452, g: 0.8352942, b: 0.87843144, a: 0.5176471}
+  ResultsColorListLight: {r: 0.34509805, g: 0.34509805, b: 0.38823533, a: 0.65882355}
+  ResultsColorListDark: {r: 0.23137257, g: 0.23137257, b: 0.25882354, a: 0.6117647}
+  ResultsColorListHoverLight: {r: 0.34509805, g: 0.34509805, b: 0.38823533, a: 0.44705883}
+  ResultsColorListHoverDark: {r: 0.2627451, g: 0.2627451, b: 0.29411766, a: 0.65882355}
+  ResultsColorListHighlightOne: {r: 0.49411768, g: 0.83921576, b: 0.69803923, a: 0.50980395}
+  ResultsColorListHighlightTwo: {r: 0.8506002, g: 0.8773585, b: 0.68284976, a: 0.47058824}
+  ResultsColorResultTextOne: {r: 0.95294124, g: 0.95294124, b: 0.95294124, a: 0.85882354}
+  ResultsColorResultTextTwo: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 0.78039217}
+  ResultsColorResultTextThree: {r: 0.4901961, g: 0.4901961, b: 0.4901961, a: 0.70980394}
+  DescriptionFieldColor: {r: 0.33268064, g: 0.6295413, b: 0.7924528, a: 0.4117647}
+  ToggleColor: {r: 0, g: 0, b: 0, a: 0}
+  worldState: 1
+  Protagonist: Hero
+  Homebase: Home

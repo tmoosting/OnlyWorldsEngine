@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 2px; margin-top: 2px; flex-shrink: 1;">
+        <ui:VisualElement name="Core" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: auto; margin-top: 4px; margin-right: 0; margin-left: 2px;">
+            <ui:Label tabindex="-1" text="Refresh" display-tooltip-when-elided="true" name="labelElementName" style="-unity-font-style: bold; font-size: 15px; margin-bottom: 4px; padding-bottom: 0;" />
+            <ui:Label tabindex="-1" text="ElementName" display-tooltip-when-elided="true" name="labelElementID" style="-unity-font-style: normal; font-size: 13px; margin-bottom: 4px; padding-top: 0; margin-top: 0;" />
+            <ui:VisualElement name="TextFieldCombo" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-self: auto; align-items: center; margin-right: 4px; margin-bottom: 2px;">
+                <ui:Label tabindex="-1" text="Name" display-tooltip-when-elided="true" />
+                <ui:TextField picking-mode="Ignore" name="textFieldName" style="flex-shrink: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="TextFieldCombo" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-self: auto; align-items: center; margin-right: 4px; margin-bottom: 2px;">
+                <ui:Label tabindex="-1" text="Age   " display-tooltip-when-elided="true" />
+                <ui:TextField picking-mode="Ignore" name="textFieldAge" style="flex-shrink: 1; margin-left: 4px;" />
+            </ui:VisualElement>
+            <ui:Button text="Save" display-tooltip-when-elided="true" name="buttonSave" style="margin-top: 112px;" />
+            <ui:Button text="Rebuild" display-tooltip-when-elided="true" name="buttonRefresh" style="margin-top: 8px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

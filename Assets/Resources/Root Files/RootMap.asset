@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b4c0a2dc50ef3448ed5b6b3986e3af, type: 3}
+  m_Name: RootMap
+  m_EditorClassIdentifier: 
+  selectPinOnElementSelect: 1
+  hoverPinColor: 1
+  pinWindowWidth: 200
+  defaultPinSize: 40
+  pinHoverScaleMultiplier: 1.2
+  zoomSpeed: 0.05
+  zoomMin: 0.8
+  zoomMax: 10
+  zoomScaleThresholdOne: 5
+  zoomScaleThresholdTwo: 2
+  zoomScaleOneAlpha: 0.25
+  zoomScaleTwoAlpha: 0.35
+  showNameFlags: 1
+  constantPinScale: 1
+  useZoomscales: 1
+  pinColoringSize: 20
+  pinScaling: 1
+  pinMinScaling: 0.1
+  pinMaxScaling: 3
+  pinCenterIconSize: 14
+  pinBaseColor: {r: 0.2999733, g: 0.47476628, b: 0.5943396, a: 0.5529412}
+  pinHoverColor: {r: 0.22694907, g: 0.9433962, b: 0.9299193, a: 0.42745098}
+  pinSelectedColor: {r: 0.0047169924, g: 1, b: 0.23744494, a: 0.78039217}
+  pinHighlightColor: {r: 0.8396226, g: 0.53056204, b: 0.13069598, a: 0.56078434}
+  pinBaseSprite: {fileID: 21300000, guid: df6209642c12cbe499e4db1990125840, type: 3}
+  pinWhiteSprite: {fileID: 21300000, guid: b7400ae8675554d41a89d896b82c4b6c, type: 3}
+  pinHighlightSprite: {fileID: 21300000, guid: 1fa0c7a53045bdd4ca1cde988360f5db, type: 3}
+  pinHoverSprite: {fileID: 21300000, guid: a59a493cd927d4944abd29e495d0a852, type: 3}
+  pinBannerSprite: {fileID: 21300000, guid: 574913be8a8a57d409241266a15ebfb8, type: 3}
+  pinRowIconElement: {fileID: 3286163911610860551, guid: 796939ddc0baa7b4881d71e82dc0184e, type: 3}
+  pinRowIconMap: {fileID: 3286163911610860551, guid: 4174008d0f01fa9438c280654939978d, type: 3}
+  pinRowIconDescriptive: {fileID: 3286163911610860551, guid: 086746c3bc4229045b22e1d6b233cb54, type: 3}
+  pinWindowColor: {r: 0.25, g: 0.3, b: 0.4, a: 1}
+  pinSortBarColor: {r: 0.20784315, g: 0.3647059, b: 0.43921572, a: 0.7176471}
+  ResultRowHeight: 35
+  ResultRowIconSize: 20
+  ResultRowIconMargin: 4
+  highlightMode: 0
+  filterMode: 0
+  includedElementTables: 

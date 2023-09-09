@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3b6b855461b644da3a715ab8e3856b, type: 3}
+  m_Name: RootView
+  m_EditorClassIdentifier: 
+  ContentMargin: 1
+  TopSelectorsHeight: 30
+  CategorySelectorsHeight: 32
+  ElementSelectorHeight: 32
+  HideRowHeight: 20
+  ConceptsHeight: 20
+  ShowSelectorLabels: 1
+  iconSize: 20
+  hoverAlpha: 1.5
+  fontSizeTop: 11
+  fontSizeCategory: 10.8
+  fontSizeElement: 9
+  labelWidthPercent: 58
+  labelHeightPercent: 32
+  searchOnPressEnter: 1
+  searchFontSize: 13
+  hoverOppositeSortBarField: 1
+  sortBarHeight: 32
+  ResultRowHeight: 30
+  ResultRowIconSize: 15
+  ResultRowIconMargin: 3
+  ResultRowGeneralMargin: 6
+  backgroundColor: {r: 0.25587398, g: 0.36248603, b: 0.4339623, a: 0}
+  customizeContentColor: {r: 0.31572622, g: 0.47712648, b: 0.5188679, a: 0.40392157}
+  Scheme1Enabled: {r: 0.46431112, g: 0.695412, b: 0.8867924, a: 0.18431373}
+  Scheme1Disabled: {r: 0.6924617, g: 0.76116335, b: 0.8584906, a: 0.15686275}
+  Scheme1Activated: {r: 0.20265219, g: 0.55090815, b: 0.6226415, a: 0.8862745}
+  Scheme2Enabled: {r: 0.28235295, g: 0.4509804, b: 0.4745098, a: 0.92156863}
+  Scheme2Disabled: {r: 0.03261112, g: 0.2735849, b: 0, a: 0.62352943}
+  Scheme2Activated: {r: 0.13163051, g: 0.9622642, b: 0.9246979, a: 0.7529412}
+  Scheme3Enabled: {r: 0.28235295, g: 0.47058827, b: 0.4901961, a: 1}
+  Scheme3Disabled: {r: 0.13207549, g: 0.05266162, b: 0.009344962, a: 0.64705884}
+  Scheme3Activated: {r: 0.13333334, g: 0.9607844, b: 0.92549026, a: 0.7529412}
+  Scheme4Enabled: {r: 0, g: 0, b: 0, a: 0}
+  Scheme4Disabled: {r: 0, g: 0, b: 0, a: 0}
+  Scheme4Activated: {r: 0, g: 0, b: 0, a: 0}
+  Scheme5Enabled: {r: 0, g: 0, b: 0, a: 0}
+  Scheme5Disabled: {r: 0, g: 0, b: 0, a: 0}
+  Scheme5Activated: {r: 0, g: 0, b: 0, a: 0}
+  CustomizeBackgroundColor: {r: 0.20392159, g: 0.54901963, b: 0.62352943, a: 0.54509807}
+  DefaultSprite: {fileID: 21300000, guid: 828206d258a0975429e82074079c335e, type: 3}
+  BrowseSprite: {fileID: 3286163911610860551, guid: b1deb50d784be344fa3f101deb7b8d01, type: 3}
+  ExamineSprite: {fileID: 3286163911610860551, guid: 672f797bfda2ff649b419ee68919e0e1, type: 3}
+  CharacterSprite: {fileID: 3286163911610860551, guid: c3e3aaadf862ef749986c1592211e155, type: 3}
+  ObjectSprite: {fileID: 3286163911610860551, guid: 89edf0ca9ac709d4387c98654cb7eda6, type: 3}
+  LocationSprite: {fileID: 3286163911610860551, guid: a005db8341d49494581fdeec7df97f3e, type: 3}
+  FamilySprite: {fileID: 3286163911610860551, guid: 6be8e4761fedd1647a65c5dd9a53b849, type: 3}
+  TerritorySprite: {fileID: 3286163911610860551, guid: 76ff9348beb80e643bf4807d5a364d6f, type: 3}
+  InstitutionSprite: {fileID: 3286163911610860551, guid: fb1abbc5e9ef16d4ea16ad8629aed487, type: 3}
+  RaceSprite: {fileID: 3286163911610860551, guid: 25a16b46121a120489e21d14e4302fa2, type: 3}
+  CreatureSprite: {fileID: 3286163911610860551, guid: 767c9a1dfacb5c24dbf3953b4e86617a, type: 3}
+  TitleSprite: {fileID: 3286163911610860551, guid: 951a45deb464c5a4da17cea50596962d, type: 3}
+  TraitSprite: {fileID: 3286163911610860551, guid: 2e1a49c58ad6b1645980726ac263fb05, type: 3}
+  GodSprite: {fileID: 3286163911610860551, guid: df9c529e9cfcb0e4baec4f080e22bbea, type: 3}
+  CollectiveSprite: {fileID: 3286163911610860551, guid: 6c04d17366cede8479e055a319740a42, type: 3}
+  LanguageSprite: {fileID: 3286163911610860551, guid: d6e84bbe7bda4f34a96f67e68ec45715, type: 3}
+  EventSprite: {fileID: 3286163911610860551, guid: 7a7e7b88268e3374d9da24bfd9803c07, type: 3}
+  LawSprite: {fileID: 3286163911610860551, guid: e49df141487cd074e8bd72fa967371b5, type: 3}
+  ConceptsSprite: {fileID: 3286163911610860551, guid: 8e0c1c3641b75c64285f1040064fb334, type: 3}
