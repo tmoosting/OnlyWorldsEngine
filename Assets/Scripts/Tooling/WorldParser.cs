@@ -19,6 +19,44 @@ public class WorldParser : ScriptableObject
       
       #region Public Access / Getters
 
+      public string GetOriginalSupertypeForPotentialCustomSupertype(Element element, string givenSupertype)
+      {
+          foreach (var tableTyping in GetTypingTablesForElementTable(element.table))
+              if (givenSupertype == tableTyping.GetPotentialCustomSupertype())
+                      return tableTyping.GetOriginalSupertype();
+          Debug.LogWarning("! Did not find Original Supertype for element: " + element.Name + " and supertype: " + givenSupertype);
+          return "";
+      } 
+      
+      public string GetOriginalSubtypeForPotentialCustomSubtype(Element element, string givenSubtype)
+      {
+          foreach (var tableTyping in GetTypingTablesForElementTable(element.table))
+              if (tableTyping.GetPotentiallyCustomSubtypes().Contains(givenSubtype))
+              {
+                  int index = tableTyping.GetPotentiallyCustomSubtypes().IndexOf(givenSubtype);
+                  return tableTyping.GetOriginalSubtypes()[index]; 
+              }
+          Debug.LogWarning("! Did not find Original Subtype for element: " + element.Name + " and subtype: " + givenSubtype);
+          return "";
+      }
+      
+      public string GetPotentialCustomSupertypeForElement(Element element)
+      {
+          foreach (var tableTyping in  GetTypingTablesForElementTable(element.table))
+              if (element.Supertype == tableTyping.Supertype)
+                  return tableTyping.GetPotentialCustomSupertype();
+          Debug.LogWarning("! Did not find Effective Supertype for element: " + element.Name + " With supertype: " + element.Supertype);
+          return "";
+      }    
+      public string GetPotentialCustomSubtypeForElement(Element element)
+      {
+          foreach (var tableTyping in  GetTypingTablesForElementTable(element.table))
+              if (element.Supertype == tableTyping.Supertype)
+                  return tableTyping.GetPotentialCustomSubtype(element.Subtype);
+          Debug.LogWarning("! Did not find Effective Supertype for element: " + element.Name + " With supertype: " + element.Supertype);
+          return "";
+      }
+      
       public List<TableTyping> GetTypingTablesForElementTable(Element.Table table)
       {
           if (table == Element.Table.Location)
@@ -33,7 +71,7 @@ public class WorldParser : ScriptableObject
       {
           List<TableTyping> potentialTypingTables = GetTypingTablesForElementTable(element.table);
           foreach (var potentialTypingTable in potentialTypingTables)
-              if (potentialTypingTable.GetEffectiveSupertype() == element.Supertype)
+              if (potentialTypingTable.GetOriginalSupertype() == element.Supertype)
                   return potentialTypingTable;
           Debug.LogWarning("Did not find a Subtyping Table for Element: " + element.ID);
           return null;
@@ -120,6 +158,7 @@ public class WorldParser : ScriptableObject
           //  CreatureTypes = dbReader.GetTableTyping("Creature"),
         };
         Debug.Log("Parsed world: " + worldName + " with " + world.Pins.Count + " Pins");
+        Debug.Log("TypesLocation has subtypescount: " +  world.TypesLocation[0].Subtypes.Count);
    
         return world;
     }

@@ -1122,7 +1122,9 @@ public class CategorySelector : Selector
         style.backgroundColor = bgColor;
         AddToClassList("categorySelector");
 
-        var stylesheet =   AssetDatabase.LoadAssetAtPath<StyleSheet>(MonoLoader.projectPath +"UI/USS/SelectorStyleSheet.uss");  
+        var stylesheet =   AssetDatabase.LoadAssetAtPath<StyleSheet>(MonoLoader.projectPath +"UI/USS/SelectorStyleSheet.uss"); 
+        if (stylesheet == null)
+            Debug.Log("Nul");
         styleSheets.Add(stylesheet); 
 
         style.opacity = 0.85f; 
@@ -1134,14 +1136,9 @@ public class CategorySelector : Selector
         float iconWidth = 1f;
         float iconHeight = 1f; 
         iconElement = new VisualElement();
+
         
-        if (RootView == null)
-            Debug.Log("Ffd");
-        if (givenSprite == null)
-            Debug.Log("givenSprite");     
-        if (givenSprite.texture == null)
-            Debug.Log("texture");
-        if (givenSprite.texture != null)
+        if (givenSprite != null)
         {
             iconScale = RootView.iconSize / Mathf.Max(givenSprite.texture.width, givenSprite.texture.height);
             iconWidth = givenSprite.texture.width * iconScale;

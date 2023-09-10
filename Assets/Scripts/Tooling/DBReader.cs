@@ -136,7 +136,65 @@ public class DBReader : ScriptableObject
         return convertedList;
     }
 
+    public List<TableTyping> GetTableTyping(string tableName)
+    {
+        List<TableTyping> tableTypes = new List<TableTyping>();
+        string query = $"SELECT * FROM {tableName}Typing";
+
+        using (_dbconn = new SqliteConnection(dbActivePath))
+        {
+            _dbconn.Open();
+            using (_dbcmd = _dbconn.CreateCommand())
+            {
+                _dbcmd.CommandText = query;
+                using (_reader = _dbcmd.ExecuteReader())
+                {
+                    while (_reader.Read())
+                    {
+                        TableTyping tblType = new TableTyping
+                        {
+                      //      Supertype = _reader["Types"].ToString(),
+                            TypeCustom = _reader["TypesCustom"].ToString(),
+                            // Initialize Subtypes and SubtypeCustoms with a single empty string
+                       //     Subtypes = new List<string> { "" },
+                            SubtypeCustoms = new List<string> { "" }
+                        };
+                        tblType.SetSupertype(_reader["Types"].ToString());
+                        tblType.SetSubtype(new List<string> { "" });
+                        
+                        string subtypes = _reader["Subtypes"].ToString();
+                        if (!string.IsNullOrEmpty(subtypes))
+                        {
+                            tblType.SetSubtype( subtypes.Split(',').ToList());
+                            //     tblType.Subtypes = subtypes.Split(',').ToList();
+                        }
+
+                        string subtypeCustoms = _reader["SubtypesCustom"].ToString();
+                        if (!string.IsNullOrEmpty(subtypeCustoms))
+                        {
+                            tblType.SubtypeCustoms = subtypeCustoms.Split(',').ToList();
+                        }
+
+                        // Ensure SubtypeCustoms has the same number of elements as Subtypes
+                        while (tblType.SubtypeCustoms.Count < tblType.Subtypes.Count)
+                        {
+                            tblType.SubtypeCustoms.Add("");
+                        }
+
+                        tableTypes.Add(tblType);
+                    }
+                }
+            }
+            _dbconn.Close();
+        }
+        return tableTypes;
+    }
+
+
     
+    
+    // Uses the column-per-Type for subtypes that I never quite got proper working
+    /*
     public List<TableTyping> GetTableTyping(string tableName)
 {
     List<TableTyping> tableTypes = new List<TableTyping>();
@@ -220,59 +278,11 @@ public class DBReader : ScriptableObject
 
     return tableTypes;
 }
+*/
 
 
 
-
-    /*public List<TableTyping> GetTableTyping(string tableName)
-    {
-        List<TableTyping> tableTypes = new List<TableTyping>();
-        string query = $"SELECT * FROM {tableName}Typing";   
-
-        using (_dbconn = new SqliteConnection(dbActivePath))
-        {
-            _dbconn.Open();
-            using (_dbcmd = _dbconn.CreateCommand())
-            {
-                _dbcmd.CommandText = query;
-                using (_reader = _dbcmd.ExecuteReader())
-                {
-                    while(_reader.Read())
-                    {
-                        TableTyping tblType = new TableTyping
-                        {
-                            Type = _reader["Types"].ToString(),
-                            Subtypes = new List<string>()
-
-                        };  
-                        for (int i = 1; i <= 5; i++)
-                        {
-                            string subtypeColName = $"Subtypes{i}";
-                            if (_reader[subtypeColName] != DBNull.Value) 
-                            {
-                                string subtype = _reader[subtypeColName].ToString();
-                                if (!string.IsNullOrEmpty(subtype))
-                                    tblType.Subtypes.Add(subtype);
-                            }
-                        } 
-                        for (int i = 1; i <= 5; i++)
-                        {
-                            string subtypeColName = $"SubtypesCustom{i}";
-                            if (_reader[subtypeColName] != DBNull.Value) 
-                            {
-                                string subtype = _reader[subtypeColName].ToString();
-                                if (!string.IsNullOrEmpty(subtype))
-                                    tblType.Subtypes.Add(subtype);
-                            }
-                        } 
-                        tableTypes.Add(tblType);
-                    }
-                }
-            }
-            _dbconn.Close();
-        } 
-        return tableTypes;
-    }*/
+ 
 
     public List<T> GetAllElementsOfType<T>(Element.Table table) where T : Element
     {

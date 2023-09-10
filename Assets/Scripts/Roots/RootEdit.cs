@@ -18,13 +18,26 @@ public class RootEdit : ScriptableObject
     public Color backgroundColor;
 
 
-    public void MakeTableTypingChange(TableTyping tableTyping, string propertyName, string value)
-    {
-        PropertyInfo propertyInfo = tableTyping.GetType().GetProperty(propertyName);
-        propertyInfo.SetValue(tableTyping, value);
-        RootControl.RegisterTableTypingValueChange();
+    public void MakeTableTypingChange(TableTyping tableTyping, string propertyName, string value, int index = -1)
+    { 
+        
+       Debug.Log(tableTyping.Supertype + " has propertyName: " + propertyName + " getting value: " + value + " index: " + index);
 
+ 
+        if (propertyName == "SubtypeCustoms" && index >= 0)
+        {
+            tableTyping.SubtypeCustoms[index] = value;
+        }
+        else
+        {
+            PropertyInfo propertyInfo = tableTyping.GetType().GetProperty(propertyName);
+            propertyInfo.SetValue(tableTyping, value);
+        } 
+        
+
+        RootControl.RegisterTableTypingValueChange();
     }
+
 
     public void MakeDirectActiveElementChange(string propertyName, string value)
     {
@@ -259,8 +272,8 @@ public class RootEdit : ScriptableObject
         Location location = new Location();
         location.ID = System.Guid.NewGuid().ToString();
         location.Name = elementName;
-        location.Supertype = RootControl.World.TypesLocation[0].GetEffectiveSupertype();
-        location.Subtype = RootControl.World.TypesLocation[0].GetEffectiveSubtypes()[0];
+        location.Supertype = RootControl.World.TypesLocation[0].GetOriginalSupertype();
+        location.Subtype = RootControl.World.TypesLocation[0].GetOriginalSubtypes()[0];
         
         location.Map = RootControl.Map.Name;
         RootControl.World.Locations.Add(location);

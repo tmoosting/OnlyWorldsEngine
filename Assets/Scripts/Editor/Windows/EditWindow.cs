@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
@@ -220,6 +221,8 @@ public class EditWindow : EditorWindow
     private ClickLabel nameLabel;
     private WhiteButton deleteButton;
     private SquareDropdown sortDropdown;
+    private BlueDropdownField typeDropdown;
+    private BlueDropdownField subtypeDropdown;
     private string dropdownStartString = "Sort by..";
     private void CreateElementEditFields()
     {
@@ -239,18 +242,18 @@ public class EditWindow : EditorWindow
         Dictionary<string, string> propertiesAndValues = RootEdit.GetPropertiesAndValues(    RootControl.Element);
 
 
-        BlueDropdownField typeDropdown = new BlueDropdownField(RootControl, "Supertype", fieldsContent.resolvedStyle.width, OnTypeValueChange);
+        typeDropdown = new BlueDropdownField(RootControl, "Supertype", fieldsContent.resolvedStyle.width, OnSupertypeValueChange);
         List<string> tableTypes = new List<string>();
         foreach (var tableTyping in RootControl.WorldParser.GetTypingTablesForElementTable(element.table))
-            tableTypes.Add(tableTyping.GetEffectiveSupertype());
+            tableTypes.Add(tableTyping.GetPotentialCustomSupertype());
         typeDropdown.Dropdown.choices = tableTypes;
-        typeDropdown.Dropdown.SetValueWithoutNotify(element.Supertype);
+        typeDropdown.Dropdown.SetValueWithoutNotify( RootControl.WorldParser.GetPotentialCustomSupertypeForElement( element));
         typeDropdown.style.marginBottom = bottomSpacing;
         fieldsEditFieldsContent.Add(typeDropdown);
 
-        BlueDropdownField subtypeDropdown = new BlueDropdownField(RootControl, "Subtype", fieldsContent.resolvedStyle.width, OnSubtypeValueChange);
-        subtypeDropdown.Dropdown.choices = RootControl.WorldParser.GetTypingTableForElement(element).GetEffectiveSubtypes();
-        subtypeDropdown.Dropdown.SetValueWithoutNotify(element.Subtype);
+        subtypeDropdown = new BlueDropdownField(RootControl, "Subtype", fieldsContent.resolvedStyle.width, OnSubtypeValueChange);
+        subtypeDropdown.Dropdown.choices = RootControl.WorldParser.GetTypingTableForElement(element).GetPotentiallyCustomSubtypes();
+        subtypeDropdown.Dropdown.SetValueWithoutNotify( RootControl.WorldParser.GetPotentialCustomSubtypeForElement( element));
         subtypeDropdown.style.marginBottom = bottomSpacing;
         fieldsEditFieldsContent.Add(subtypeDropdown);
         
@@ -269,14 +272,30 @@ public class EditWindow : EditorWindow
             fieldsEditFieldsContent.Add(visualElement); 
     }
 
-    private void OnTypeValueChange(string value)
+    private void OnSupertypeValueChange(string value)
     {
-        RootEdit.MakeDirectActiveElementChange( "Supertype", value);
-  
+        string actualSupertype =
+            RootControl.WorldParser.GetOriginalSupertypeForPotentialCustomSupertype(RootControl.Element, value);
+        RootEdit.MakeDirectActiveElementChange( "Supertype", actualSupertype);
+        UpdateSubtypesAfterSupertypeChange();
     }
+
+    // update both the Element's subtype, now invalid due to supertype change, and the subtypes dropdown
+    private void UpdateSubtypesAfterSupertypeChange()
+    {
+        List<string> originalSubtypes = RootControl.WorldParser.GetTypingTableForElement(RootControl.Element).GetOriginalSubtypes();
+        List<string> customSubtypes = RootControl.WorldParser.GetTypingTableForElement(RootControl.Element).GetPotentiallyCustomSubtypes();
+        
+        subtypeDropdown.Dropdown.choices = customSubtypes.ToList();
+        RootEdit.MakeDirectActiveElementChange("Subtype", originalSubtypes[0]); 
+        subtypeDropdown.Dropdown.SetValueWithoutNotify(customSubtypes[0]);
+    }
+
     private void OnSubtypeValueChange(string value)
     {
-        RootEdit.MakeDirectActiveElementChange("Subtype", value);
+        string actualSubtype  =
+            RootControl.WorldParser.GetOriginalSubtypeForPotentialCustomSubtype(RootControl.Element, value);
+        RootEdit.MakeDirectActiveElementChange("Subtype", actualSubtype);
     }
 
    

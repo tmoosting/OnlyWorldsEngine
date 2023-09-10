@@ -145,7 +145,59 @@ using System;
             connection.Close();
         }
     }
-public void WriteTypingTable(Element.Table table)
+    
+    public void WriteTypingTable(Element.Table table)
+    { 
+        using (SqliteConnection connection = new SqliteConnection(dbActivePath))
+        {
+            connection.Open();
+            string tableName = table + "Typing";
+
+            List<TableTyping> typingData = RootControl.WorldParser.GetTypingTablesForElementTable(table);
+
+            foreach (var tblType in typingData)
+            {
+                // Prepare data for insert query
+                List<string> columnsList = new List<string> { "Types", "TypesCustom", "Subtypes", "SubtypesCustom" };
+                List<string> parametersList = new List<string> { "@Types", "@TypesCustom", "@Subtypes", "@SubtypesCustom" };
+                /*if (tblType.Subtypes != null)
+                    if (tblType.Subtypes.Count > 0)
+                        if (tblType.Subtypes[0] != null)
+                            Debug.Log("REGsubtype" + tblType.Subtypes[0]);
+                if (tblType.SubtypeCustoms != null)
+                 if (tblType.SubtypeCustoms.Count > 0)
+                   if (tblType.SubtypeCustoms[0] != null)
+                      Debug.Log("CUSTOMsubtype" + tblType.SubtypeCustoms[0]);*/
+                var values = new Dictionary<string, object>
+                {
+                    { "@Types", tblType.Supertype },
+                    { "@TypesCustom", tblType.TypeCustom },
+                    { "@Subtypes", string.Join(",", tblType.Subtypes) },
+                    { "@SubtypesCustom", string.Join(",", tblType.SubtypeCustoms) }
+                };
+
+                string columns = string.Join(", ", columnsList);
+                string parameters = string.Join(", ", parametersList);
+
+//                Debug.Log($"Writing to database: Subtypes={string.Join(",", tblType.Subtypes)}, SubtypesCustom={string.Join(",", tblType.SubtypeCustoms)}");
+
+                try
+                {
+                    ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Error executing query with columns {columns} and values {string.Join(", ", values.Select(p => $"{p.Key} = {p.Value}"))}. Exception: {ex}");
+                    throw;
+                }
+            }
+
+            connection.Close();
+        }
+    }
+
+    
+/*public void WriteTypingTable(Element.Table table)
 {
     Debug.Log("" + table);
 
@@ -207,7 +259,7 @@ public void WriteTypingTable(Element.Table table)
 
         connection.Close();
     }
-}
+}*/
 
 
 

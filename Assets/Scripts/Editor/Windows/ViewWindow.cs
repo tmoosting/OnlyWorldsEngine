@@ -977,14 +977,14 @@ public class ViewWindow : EditorWindow
            // subtypeFields
            for (int i = 0; i < typingTableList[clickedTypeFieldIndex].Subtypes.Count; i++)
            {
-               EditField editField = new EditField(RootControl, false, "",typingTableList[clickedTypeFieldIndex].Subtypes[i]   , 
+               EditField editField = new EditField(RootControl, false, "",typingTableList[clickedTypeFieldIndex].GetOriginalSubtypes()[i], 
                    columnOne.resolvedStyle.width  , null, null, null);
                editField.SetInteractable(false);
                editField.style.width = Length.Percent(85);
                editField.style.height = RootControl.EditFieldHeight;
                editField.style.marginTop = marginTop;
                subtypeFields.Add(editField);
-               columnFour.Add(editField);
+               columnFour.Add(editField); 
            }  
            // subtypeCustomFields
            for (int i = 0; i < typingTableList[clickedTypeFieldIndex].Subtypes.Count; i++)
@@ -1030,15 +1030,18 @@ public class ViewWindow : EditorWindow
        }
        private void ClickEnterCustomSubtype(EditField arg1, string arg2)
        {
-           //todo replace
-     //      RootControl.RootEdit.MakeTableTypingChange(typingTableList[typeCustomFields.IndexOf(arg1)], "TypeCustom", arg2); 
-           typingTableList[clickedTypeFieldIndex].Subtypes[subtypeCustomFields.IndexOf(arg1)] = arg2;
-           
-           RootControl.RegisterViewWindowValueChange(); 
-           if (arg2 == "") 
-               RebuildCustomization(); 
+           int index = subtypeCustomFields.IndexOf(arg1);
+           TableTyping tableTyping = typingTableList[clickedTypeFieldIndex];
+           Debug.Log("Table: " + tableTyping.Supertype);
+           RootControl.RootEdit.MakeTableTypingChange(tableTyping, "SubtypeCustoms", arg2, index);
+           typingTableList[clickedTypeFieldIndex].Subtypes[index] = arg2;
+
+           RootControl.RegisterViewWindowValueChange(false);
+           if (arg2 == "")
+               RebuildCustomization();
            arg1.SetColor(new Color(RootControl.BlueElementColor.r,RootControl.BlueElementColor.g,RootControl.BlueElementColor.b, RootControl.BlueElementColor.a * 2f));
        }
+
 
       
        private int clickedTypeFieldIndex = 0;

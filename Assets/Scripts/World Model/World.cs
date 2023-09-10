@@ -50,24 +50,53 @@ public class World
 
 public class TableTyping
 {
-    public string Supertype { get; set; }
+    public string Supertype { get; private set; }
     public string TypeCustom { get; set; }
-    public List<string> Subtypes { get; set; }  
+    public List<string> Subtypes { get; private set; }  
     public List<string> SubtypeCustoms { get; set; }
 
 
-    public string GetEffectiveSupertype()
+    public void SetSupertype(string str)
     {
-        if (string.IsNullOrEmpty(TypeCustom) == false)
-            return TypeCustom;
+        Supertype = str;
+    }
+    public void SetSubtype(List<string> strs)
+    { 
+        Subtypes = strs;
+    }
+    public string GetOriginalSupertype()
+    { 
         return Supertype;
     }
-    public List<string> GetEffectiveSubtypes()
+    public string GetPotentialCustomSupertype()
+    {
+        if (string.IsNullOrEmpty(TypeCustom) == false)
+             return TypeCustom;
+        return Supertype;
+    }  
+    public string GetPotentialCustomSubtype(string originalSubtypeName)
+    {
+        int index = 99;
+        foreach (var subtype in Subtypes)
+            if (subtype == originalSubtypeName)
+            {
+                  index = Subtypes.IndexOf(subtype);
+            } 
+          if (index == 99)
+              Debug.LogWarning("!Did not find GetPotentialCustomSubtype for supertype " + Supertype + " argument: " + originalSubtypeName );
+          if (SubtypeCustoms[index] != "")
+              return SubtypeCustoms[index];
+          return Subtypes[index]; 
+    }
+    public List<string> GetOriginalSubtypes()
+    {
+        return Subtypes;
+    }
+    public List<string> GetPotentiallyCustomSubtypes()
     {
         List<string> returnList = new List<string>();
         foreach (var subtype in Subtypes)
         {
-            
             if ( string.IsNullOrEmpty( SubtypeCustoms[Subtypes.IndexOf(subtype)]) == false)
                 returnList.Add(SubtypeCustoms[Subtypes.IndexOf(subtype)]);
             else
