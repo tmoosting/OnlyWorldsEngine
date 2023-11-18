@@ -648,14 +648,15 @@ public class ResultRowElement : VisualElement
         _iconElement.style.height = RootControl.RootView.ResultRowIconSize; 
         _iconElement.style.marginLeft = RootControl.RootView.ResultRowIconMargin;
         _iconElement.style.backgroundImage = new StyleBackground(RootControl.RootView.GetSelectorSprite(element.table.ToString()).texture);
-        if (RootControl.RootMap.DoesElementHavePinOnMap(element))
-        {
-            _pinElement.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinWhiteSprite.texture);
-            _pinElement.style.visibility = new StyleEnum<Visibility>(Visibility.Visible);
-            _pinElement.style.width = RootControl.RootView.ResultRowIconSize;
-            _pinElement.style.height = RootControl.RootView.ResultRowIconSize;
-            _pinElement.style.marginRight = 2f;
-        }
+        if (RootControl.Map != null)
+            if (RootControl.RootMap.DoesElementHavePinOnMap(element))
+            {
+                _pinElement.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinWhiteSprite.texture);
+                _pinElement.style.visibility = new StyleEnum<Visibility>(Visibility.Visible);
+                _pinElement.style.width = RootControl.RootView.ResultRowIconSize;
+                _pinElement.style.height = RootControl.RootView.ResultRowIconSize;
+                _pinElement.style.marginRight = 2f;
+            }
 
         ResetStyle();
     }

@@ -81,12 +81,16 @@ public class TableTyping
             if (subtype == originalSubtypeName)
             {
                   index = Subtypes.IndexOf(subtype);
-            } 
-          if (index == 99)
-              Debug.LogWarning("!Did not find GetPotentialCustomSubtype for supertype " + Supertype + " argument: " + originalSubtypeName );
-          if (SubtypeCustoms[index] != "")
+            }
+
+        if (index == 99)
+        {
+          //  Debug.LogWarning("!Did not find GetPotentialCustomSubtype for supertype " + Supertype + " argument: " + originalSubtypeName );
+            return "";
+        }
+        if (SubtypeCustoms[index] != "")
               return SubtypeCustoms[index];
-          return Subtypes[index]; 
+        return Subtypes[index]; 
     }
     public List<string> GetOriginalSubtypes()
     {

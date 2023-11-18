@@ -36,7 +36,7 @@ public class Element
     public string Supertype { get; set; }
     public string Subtype { get; set; }
     public string Description{ get; set; }
-  
+    public int CreationTimeStamp { get; set; }
     
     public static readonly Dictionary<string, Type> tableTypes = new Dictionary<string, Type>
     {
