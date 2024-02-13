@@ -19,24 +19,24 @@ public class World
     public string Name;
     
     
-    public List<Character> Characters { get; set; }
-    public List<Force> Forces { get; set; }
-    public List<Event> Events { get; set; }
-    public List<Relation> Relations { get; set; }
-    public List<Collective> Collectives { get; set; }
-    public List<Construct> Concepts { get; set; }
-    public List<Creature> Creatures { get; set; }
-    public List<Location> Locations { get; set; }
-    public List<Object> Objects { get; set; }
-    public List<Institution> Institutions { get; set; }
-    public List<Territory> Territorys { get; set; }
-    public List<Title> Titles { get; set; }
-    public List<Species> Races { get; set; }
-    public List<Family> Familys { get; set; }
-    public List<Family> Traits { get; set; }
-    public List<Law> Laws { get; set; }
-    public List<Language> Languages { get; set; }
-    public List<Ability> Abilitys { get; set; }
+    public List<Character> CharacterList { get; set; }
+    public List<Force> ForceList { get; set; }
+    public List<Event> EventList { get; set; }
+    public List<Relation> RelationList { get; set; }
+    public List<Collective> CollectiveList { get; set; }
+    public List<Construct> ConstructList { get; set; }
+    public List<Creature> CreatureList { get; set; }
+    public List<Location> LocationList { get; set; }
+    public List<Object> ObjectList { get; set; }
+    public List<Institution> InstitutionList { get; set; }
+    public List<Territory> TerritoryList { get; set; }
+    public List<Title> TitleList { get; set; }
+    public List<Species> SpeciesList { get; set; }
+    public List<Family> FamilyList { get; set; }
+    public List<Family> TraitList { get; set; }
+    public List<Law> LawList { get; set; }
+    public List<Language> LanguageList { get; set; }
+    public List<Ability> AbilityList { get; set; }
 
     public List<Map> Maps = new List<Map>();
     public List<Pin> Pins = new List<Pin>();

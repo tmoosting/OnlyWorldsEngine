@@ -142,24 +142,24 @@ public class WorldParser : ScriptableObject
         World world = new World
         {
             Name = worldName,
-            Characters = dbReader.GetAllElementsOfType<Character>(Element.Category.Character),
-            Forces = dbReader.GetAllElementsOfType<Force>(Element.Category.Force),
-            Events = dbReader.GetAllElementsOfType<Event>(Element.Category.Event),
-            Relations = dbReader.GetAllElementsOfType<Relation>(Element.Category.Relation),
-            Collectives = dbReader.GetAllElementsOfType<Collective>(Element.Category.Collective),
-            Concepts = dbReader.GetAllElementsOfType<Construct>(Element.Category.Construct),
-            Creatures = dbReader.GetAllElementsOfType<Creature>(Element.Category.Creature),
-            Locations = dbReader.GetAllElementsOfType<Location>(Element.Category.Location),
-            Objects = dbReader.GetAllElementsOfType<Object>(Element.Category.Object),
-            Institutions = dbReader.GetAllElementsOfType<Institution>(Element.Category.Institution),
-            Territorys = dbReader.GetAllElementsOfType<Territory>(Element.Category.Territory),
-            Titles = dbReader.GetAllElementsOfType<Title>(Element.Category.Title),
-            Races = dbReader.GetAllElementsOfType<Species>(Element.Category.Species),
-            Familys = dbReader.GetAllElementsOfType<Family>(Element.Category.Family),
-            Traits = dbReader.GetAllElementsOfType<Family>(Element.Category.Trait),
-            Laws = dbReader.GetAllElementsOfType<Law>(Element.Category.Law),
-            Languages = dbReader.GetAllElementsOfType<Language>(Element.Category.Language),
-            Abilitys = dbReader.GetAllElementsOfType<Ability>(Element.Category.Ability),
+            CharacterList = dbReader.GetAllElementsOfType<Character>(Element.Category.Character),
+            ForceList = dbReader.GetAllElementsOfType<Force>(Element.Category.Force),
+            EventList = dbReader.GetAllElementsOfType<Event>(Element.Category.Event),
+            RelationList = dbReader.GetAllElementsOfType<Relation>(Element.Category.Relation),
+            CollectiveList = dbReader.GetAllElementsOfType<Collective>(Element.Category.Collective),
+            ConstructList = dbReader.GetAllElementsOfType<Construct>(Element.Category.Construct),
+            CreatureList = dbReader.GetAllElementsOfType<Creature>(Element.Category.Creature),
+            LocationList = dbReader.GetAllElementsOfType<Location>(Element.Category.Location),
+            ObjectList = dbReader.GetAllElementsOfType<Object>(Element.Category.Object),
+            InstitutionList = dbReader.GetAllElementsOfType<Institution>(Element.Category.Institution),
+            TerritoryList = dbReader.GetAllElementsOfType<Territory>(Element.Category.Territory),
+            TitleList = dbReader.GetAllElementsOfType<Title>(Element.Category.Title),
+            SpeciesList = dbReader.GetAllElementsOfType<Species>(Element.Category.Species),
+            FamilyList = dbReader.GetAllElementsOfType<Family>(Element.Category.Family),
+            TraitList = dbReader.GetAllElementsOfType<Family>(Element.Category.Trait),
+            LawList = dbReader.GetAllElementsOfType<Law>(Element.Category.Law),
+            LanguageList = dbReader.GetAllElementsOfType<Language>(Element.Category.Language),
+            AbilityList = dbReader.GetAllElementsOfType<Ability>(Element.Category.Ability),
             Maps = dbReader.GetAllMaps(),
             Pins = dbReader.GetAllPins(),
             TypesLocation = dbReader.GetTableTyping(Element.Category.Location.ToString()),
@@ -195,8 +195,8 @@ public class WorldParser : ScriptableObject
             }
             else // Standard table
             {
-                if (propName.EndsWith("s"))
-                    propName = propName.Substring(0, propName.Length - 1);
+                if (propName.EndsWith("List"))
+                    propName = propName.Substring(0, propName.Length - 4);
 
                 // Get the list of elements from the property
                 var elements = (IList)prop.GetValue(world); 
@@ -215,7 +215,7 @@ public class WorldParser : ScriptableObject
         foreach (var typeTable in typeTables)
         {
            dbWriter.FlushTable( typeTable+"Typing");
-            dbWriter.WriteTypingTable(typeTable ); 
+           dbWriter.WriteTypingTable(typeTable ); 
         }
         dbWriter.FlushTable("Map");
         dbWriter.FlushTable("Pin");

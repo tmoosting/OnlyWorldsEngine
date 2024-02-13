@@ -255,8 +255,7 @@ public class DBReader : ScriptableObject
     if (element != null)
     {
         foreach (var property in elementType.GetProperties())
-        {
-            // Convert the property name to snake_case to match database column names
+        { 
             string dbName = property.Name.ToSnakeCase();
 
             if (dict.TryGetValue(dbName, out string value))

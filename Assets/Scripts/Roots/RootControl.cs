@@ -422,41 +422,41 @@ public class RootControl : ScriptableObject
         switch (category)
         {
             case Element.Category.Character:
-                return World.Characters.Cast<Element>().ToList();
+                return World.CharacterList.Cast<Element>().ToList();
             case Element.Category.Force:
-                return World.Forces.Cast<Element>().ToList();
+                return World.ForceList.Cast<Element>().ToList();
             case Element.Category.Event:
-                return World.Events.Cast<Element>().ToList();
+                return World.EventList.Cast<Element>().ToList();
             case Element.Category.Relation:
-                return World.Relations.Cast<Element>().ToList();
+                return World.RelationList.Cast<Element>().ToList();
             case Element.Category.Collective:
-                return World.Collectives.Cast<Element>().ToList();
+                return World.CollectiveList.Cast<Element>().ToList();
             case Element.Category.Construct:
-                return World.Concepts.Cast<Element>().ToList();
+                return World.ConstructList.Cast<Element>().ToList();
             case Element.Category.Creature:
-                return World.Creatures.Cast<Element>().ToList();
+                return World.CreatureList.Cast<Element>().ToList();
             case Element.Category.Location:
-                return World.Locations.Cast<Element>().ToList();
+                return World.LocationList.Cast<Element>().ToList();
             case Element.Category.Object:
-                return World.Objects.Cast<Element>().ToList();
+                return World.ObjectList.Cast<Element>().ToList();
             case Element.Category.Institution:
-                return World.Institutions.Cast<Element>().ToList();
+                return World.InstitutionList.Cast<Element>().ToList();
             case Element.Category.Territory:
-                return World.Territorys.Cast<Element>().ToList();
+                return World.TerritoryList.Cast<Element>().ToList();
             case Element.Category.Title:
-                return World.Titles.Cast<Element>().ToList();
+                return World.TitleList.Cast<Element>().ToList();
             case Element.Category.Species:
-                return World.Races.Cast<Element>().ToList();
+                return World.SpeciesList.Cast<Element>().ToList();
             case Element.Category.Family:
-                return World.Familys.Cast<Element>().ToList();  
+                return World.FamilyList.Cast<Element>().ToList();  
             case Element.Category.Trait:
-                return World.Traits.Cast<Element>().ToList();
+                return World.TraitList.Cast<Element>().ToList();
             case Element.Category.Law:
-                return World.Laws.Cast<Element>().ToList();  
+                return World.LawList.Cast<Element>().ToList();  
             case Element.Category.Language:
-                return World.Languages.Cast<Element>().ToList();        
+                return World.LanguageList.Cast<Element>().ToList();        
             case Element.Category.Ability:
-                return World.Abilitys.Cast<Element>().ToList();
+                return World.AbilityList.Cast<Element>().ToList();
             default:
                 Debug.LogError($"Unsupported table: {category}");
                 return null;

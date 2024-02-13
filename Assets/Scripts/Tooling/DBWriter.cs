@@ -77,7 +77,7 @@ using System;
                         command.Parameters.Add(new SqliteParameter(parameter.Key, parameter.Value));
                     }
                 }
-                if (query.Substring(0,6) != "DELETE")
+             //   if (query.Substring(0,6) != "DELETE")
                     Debug.Log("query:" + query); 
                 command.ExecuteNonQuery();
             }
@@ -97,9 +97,10 @@ using System;
             string tableName;
             if (!tableNames.TryGetValue(element.category, out tableName))
             {
-                Debug.LogError("Invalid Element.Type: " + element.category);
+                Debug.LogError("Invalid Element.Category: " + element.category);
                 return;
             }
+
 
             // Get column names from the table
             List<string> columnNames = new List<string>();
@@ -114,15 +115,15 @@ using System;
                 }
             }
 
-            // Get properties of the element 
-            var properties = element.GetType().GetProperties().Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
+            var properties = element.GetType().GetProperties()
+                .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
 
-            // Compare properties to column names and filter out the non-matching ones
-            properties = properties.Where(p => columnNames.Contains(p.Name));
+            // Filter out properties that do not match column names in the database
+            properties = properties.Where(p => columnNames.Contains(p.Name.ToSnakeCase()));
 
             if (properties.Any())
             {
-                var columns = string.Join(", ", properties.Select(p => p.Name));
+                var columns = string.Join(", ", properties.Select(p => p.Name.ToSnakeCase()));
                 var parameters = string.Join(", ", properties.Select(p => "@" + p.Name));
 
                 var values = new Dictionary<string, object>();
@@ -130,11 +131,10 @@ using System;
                 {
                     object value = prop.GetValue(element);
 
-                    // Check if the property has the SQLiteBoolAttribute
                     if (prop.PropertyType == typeof(bool) && Attribute.IsDefined(prop, typeof(SQLiteBoolAttribute)))
                         value = (bool)value ? 1 : 0;
 
-                    values.Add("@" + prop.Name, value);
+                    values.Add("@" + prop.Name, value); // The parameter name does not need conversion
                 }
 
                 ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
@@ -197,72 +197,7 @@ using System;
         }
     }
 
-    
-/*public void WriteTypingTable(Element.Table table)
-{
-    Debug.Log("" + table);
-
-    using (SqliteConnection connection = new SqliteConnection(dbActivePath))
-    {
-        connection.Open();
-        string tableName = table + "Typing";
-
-        List<TableTyping> typingData = RootControl.WorldParser.GetTypingTablesForElementTable(table);
-
-        foreach (var tblType in typingData)
-        {
-            // Begin by inserting Types and TypesCustom
-            List<string> columnsList = new List<string> { "Types", "TypesCustom" };
-            List<string> parametersList = new List<string> { "@Types", "@TypesCustom" };
-            var values = new Dictionary<string, object>
-            {
-                { "@Types", tblType.Supertype },
-                { "@TypesCustom", tblType.TypeCustom }
-            };
-
-            // Generate SQL for Subtypes and SubtypeCustoms
-            for (int i = 0; i < tblType.Subtypes.Count; i++)
-            {
-                string subtypeColumn = $"Subtypes{i + 1}";
-                string customSubtypeColumn = $"SubtypesCustom{i + 1}";
-
-                if (DoesColumnExist(tableName, subtypeColumn, connection))
-                {
-                    columnsList.Add(subtypeColumn);
-                    parametersList.Add($"@{subtypeColumn}");
-                    values[$"@{subtypeColumn}"] = tblType.Subtypes[i];
-                }
-
-                if (tblType.SubtypeCustoms.Count > i && tblType.SubtypeCustoms[i] != null)
-                {
-                    if (DoesColumnExist(tableName, customSubtypeColumn, connection))
-                    {
-                        columnsList.Add(customSubtypeColumn);
-                        parametersList.Add($"@{customSubtypeColumn}");
-                        values[$"@{customSubtypeColumn}"] = tblType.SubtypeCustoms[i];
-                    }
-                }
-            }
-
-            string columns = string.Join(", ", columnsList);
-            string parameters = string.Join(", ", parametersList);
-
-            try
-            {
-                ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Error executing query with columns {columns} and values {string.Join(", ", values.Select(p => $"{p.Key} = {p.Value}"))}. Exception: {ex}");
-                throw;
-            }
-        }
-
-        connection.Close();
-    }
-}*/
-
-
+ 
 
  
 private bool DoesColumnExist(string tableName, string columnName, SqliteConnection connection)
@@ -344,130 +279,6 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
         ExecuteQuery("DELETE FROM " + table);
     }
     
-  
-    /*
-    public void OverwriteElement(Element element)
-    {
-        using (SqliteConnection connection = new SqliteConnection(dbActivePath))
-        {
-            connection.Open();
-
-            string tableName;
-            if (!tableNames.TryGetValue(element.table, out tableName))
-            {
-                Debug.LogError("Invalid Element.Type: " + element.table);
-                return;
-            }
-
-            // Get column names from the table
-            List<string> columnNames = new List<string>();
-            using (SqliteCommand command = new SqliteCommand($"PRAGMA table_info({tableName})", connection))
-            {
-                using (SqliteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        columnNames.Add(reader["name"].ToString());
-                    }
-                }
-            }
-
-            // Get properties of the element
-            var properties = element.GetType().GetProperties().Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
-
-            // Compare properties to column names and filter out the non-matching ones
-            properties = properties.Where(p => columnNames.Contains(p.Name));
-
-            if (properties.Any())
-            {
-                var setValues = string.Join(", ", properties.Select(p => p.Name + " = @" + p.Name));
-
-                var values = new Dictionary<string, object>();
-                foreach (var prop in properties)
-                {
-                    values.Add("@" + prop.Name, prop.GetValue(element));
-                }
-
-                ExecuteQuery($"UPDATE {tableName} SET {setValues} WHERE ID = @ID", values);
-            }
-            else
-            {
-                Debug.LogError("No matching columns for properties in " + tableName);
-            }
-            connection.Close();
-        }
-    }
-    */
-
-
-    /*
-    public void DeleteElement(Element element)
-    {
-        ExecuteQuery(
-            "DELETE FROM " + element.table + " WHERE ID=@id",
-            new Dictionary<string, object>
-            {
-                {"@id", element.ID}
-            }
-        );
-    }*/
-
-   
-    /*public void CopyActiveToTempTable()
-    {
-        using (var connection = new SqliteConnection(dbActivePath))
-        {
-            connection.Open();
-            using (var command = connection.CreateCommand())
-            {
-                // Attach backup database
-                command.CommandText = $"ATTACH DATABASE '{dbBackupPath}' AS backup;";
-                command.ExecuteNonQuery();
-
-                // Get table names from the backup database and drop them
-                command.CommandText = "SELECT name FROM backup.sqlite_master WHERE type='table';";
-                var backupTableNames = new List<string>();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        backupTableNames.Add(reader.GetString(0));
-                    }
-                }
-
-                // Drop each table from the backup database
-                foreach (var tableName in backupTableNames)
-                {
-                    command.CommandText = $"DROP TABLE IF EXISTS backup.{tableName};";
-                    command.ExecuteNonQuery();
-                }
-
-                // Get table names from the original database
-                command.CommandText = "SELECT name FROM main.sqlite_master WHERE type='table';";
-                var mainTableNames = new List<string>();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        mainTableNames.Add(reader.GetString(0));
-                    }
-                }
-
-                // Copy each table to the backup database
-                foreach (var tableName in mainTableNames)
-                {
-                    command.CommandText = $"CREATE TABLE backup.{tableName} AS SELECT * FROM main.{tableName};";
-                    command.ExecuteNonQuery();
-                }
-
-                // Detach backup database
-                command.CommandText = "DETACH DATABASE backup;";
-                command.ExecuteNonQuery();
-            }
-            connection.Close();
-        }
-    }*/
-
     
     private DBReader _dbReader;
     private DBReader Reader

@@ -190,7 +190,7 @@ public class RootEdit : ScriptableObject
             Subtype = RootControl.World.TypesLocation[0].GetOriginalSubtypes()[0],
             Map = RootControl.Map.Name
         }; 
-        RootControl.World.Locations.Add(location);
+        RootControl.World.LocationList.Add(location);
         return location;
     }
 
@@ -202,98 +202,98 @@ public class RootEdit : ScriptableObject
             Subtype = RootControl.World.TypesCharacter[0].GetOriginalSubtypes()[0], 
         }; 
   
-        RootControl.World.Characters.Add(character);
+        RootControl.World.CharacterList.Add(character);
         return character;
     }
 
     private Object CreateObject(string elementName)
     {
         Object obj = new Object(); 
-        RootControl.World.Objects.Add(obj);
+        RootControl.World.ObjectList.Add(obj);
         return obj;
     }
     
     private Creature CreateCreature(string elementName)
 {
     Creature creature = new Creature(); 
-    RootControl.World.Creatures.Add(creature);
+    RootControl.World.CreatureList.Add(creature);
     return creature;
 }
 
 private Construct CreateConcept(string elementName)
 {
     Construct construct = new Construct(); 
-    RootControl.World.Concepts.Add(construct);
+    RootControl.World.ConstructList.Add(construct);
     return construct;
 }
 
 private Force CreateForce(string elementName)
 {
     Force force = new Force(); 
-    RootControl.World.Forces.Add(force);
+    RootControl.World.ForceList.Add(force);
     return force;
 }
 
 private Event CreateEvent(string elementName)
 {
     Event newEvent = new Event(); 
-    RootControl.World.Events.Add(newEvent);
+    RootControl.World.EventList.Add(newEvent);
     return newEvent;
 }
 
 private Relation CreateRelation(string elementName)
 {
     Relation relation = new Relation(); 
-    RootControl.World.Relations.Add(relation);
+    RootControl.World.RelationList.Add(relation);
     return relation;
 }
 
 private Collective CreateCollective(string elementName)
 {
     Collective collective = new Collective(); 
-    RootControl.World.Collectives.Add(collective);
+    RootControl.World.CollectiveList.Add(collective);
     return collective;
 }
 
 private Territory CreateTerritory(string elementName)
 {
     Territory territory = new Territory(); 
-    RootControl.World.Territorys.Add(territory);
+    RootControl.World.TerritoryList.Add(territory);
     return territory;
 }
 
 private Title CreateTitle(string elementName)
 {
     Title title = new Title(); 
-    RootControl.World.Titles.Add(title);
+    RootControl.World.TitleList.Add(title);
     return title;
 }
 
 private Institution CreateInstitution(string elementName)
 {
     Institution institution = new Institution(); 
-    RootControl.World.Institutions.Add(institution);
+    RootControl.World.InstitutionList.Add(institution);
     return institution;
 }
 
 private Species CreateRace(string elementName)
 {
     Species species = new Species(); 
-    RootControl.World.Races.Add(species);
+    RootControl.World.SpeciesList.Add(species);
     return species;
 }
 
 private Family CreateFamily(string elementName)
 {
     Family family = new Family(); 
-    RootControl.World.Familys.Add(family);
+    RootControl.World.FamilyList.Add(family);
     return family;
 }
     
 private Ability CreateAbility(string elementName)
 {
     Ability ability = new Ability(); 
-    RootControl.World.Abilitys.Add(ability);
+    RootControl.World.AbilityList.Add(ability);
     return ability;
 }
     
