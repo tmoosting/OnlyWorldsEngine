@@ -253,7 +253,12 @@ public class EditWindow : EditorWindow
         fieldsEditFieldsContent.Add(typeDropdown);
 
         subtypeDropdown = new BlueDropdownField(RootControl, "Subtype", fieldsContent.resolvedStyle.width, OnSubtypeValueChange);
-        subtypeDropdown.Dropdown.choices = RootControl.WorldParser.GetTypingTableForElement(element).GetPotentiallyCustomSubtypes();
+        if (RootControl.WorldParser.GetTypingTableForElement(element) != null)
+            subtypeDropdown.Dropdown.choices = RootControl.WorldParser.GetTypingTableForElement(element)
+                .GetPotentiallyCustomSubtypes();
+        else
+            subtypeDropdown.Dropdown.choices = new List<string>() { "None" };
+        ;
         string subTypeStr = RootControl.WorldParser.GetPotentialCustomSubtypeForElement(element);
         subtypeDropdown.Dropdown.SetValueWithoutNotify(subTypeStr );
         subtypeDropdown.style.marginBottom = bottomSpacing;

@@ -167,15 +167,13 @@ public class WorldParser : ScriptableObject
           //  CreatureTypes = dbReader.GetTableTyping("Creature"),
           //  CreatureTypes = dbReader.GetTableTyping("Creature"),
         };
-        Debug.Log("Parsed world: " + worldName + " with " + world.Pins.Count + " Pins");
-        Debug.Log("TypesCharacter has subtypescount: " +  world.TypesCharacter[0].Subtypes.Count);
+        Debug.Log("Parsed world: " + worldName + " with " + world.Pins.Count + " Pins"); 
    
         return world;
     }
     private DBWriter dbWriter; 
        public void StoreWorld(World world)
-       {
-           Debug.Log("Writing " + world + " to file");
+       { 
              dbWriter = RootControl.DBWriter;
 
           // Create a backup 
@@ -214,8 +212,8 @@ public class WorldParser : ScriptableObject
         
         foreach (var typeTable in typeTables)
         {
-           dbWriter.FlushTable( typeTable+"Typing");
-           dbWriter.WriteTypingTable(typeTable ); 
+      //     dbWriter.FlushTable( typeTable+"Typing");
+      //     dbWriter.WriteTypingTable(typeTable ); 
         }
         dbWriter.FlushTable("Map");
         dbWriter.FlushTable("Pin");

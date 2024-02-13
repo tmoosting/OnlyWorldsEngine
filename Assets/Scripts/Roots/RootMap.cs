@@ -36,7 +36,7 @@ public class RootMap : ScriptableObject
     public bool showNameFlags = true;
     public bool constantPinScale = true;
     [Tooltip("Zoomscales are three levels, the lowest of which get obscured at certain zoom-out thresholds")]
-    public bool useZoomscales = true;
+    public bool useZoomscales = false;
     public float pinColoringSize = 20f;
     public float pinScaling = 1f;
     public float pinMinScaling = 0.1f;

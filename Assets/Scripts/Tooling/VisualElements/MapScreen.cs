@@ -339,6 +339,8 @@ public class MapScreen : VisualElement
         void BindItem(VisualElement e, int i)
         {
             ResultRowPin row = (ResultRowPin)e;
+            if (pins == null)
+                return;
             Pin pin = pins[i];
             row.UploadPin(pin, RootControl, i);
 

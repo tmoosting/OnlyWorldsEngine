@@ -77,7 +77,7 @@ using System;
                         command.Parameters.Add(new SqliteParameter(parameter.Key, parameter.Value));
                     }
                 }
-             //   if (query.Substring(0,6) != "DELETE")
+              if (query.Substring(0,6) != "DELETE")
                     Debug.Log("query:" + query); 
                 command.ExecuteNonQuery();
             }
@@ -88,64 +88,72 @@ using System;
     
     
     
-    public void WriteElement(Element element)
+public void WriteElement(Element element)
+{
+    using (SqliteConnection connection = new SqliteConnection(dbActivePath))
     {
-        using (SqliteConnection connection = new SqliteConnection(dbActivePath))
+        connection.Open();
+        string tableName;
+        if (!tableNames.TryGetValue(element.category, out tableName))
         {
-            connection.Open();
-
-            string tableName;
-            if (!tableNames.TryGetValue(element.category, out tableName))
-            {
-                Debug.LogError("Invalid Element.Category: " + element.category);
-                return;
-            }
-
-
-            // Get column names from the table
-            List<string> columnNames = new List<string>();
-            using (SqliteCommand command = new SqliteCommand($"PRAGMA table_info({tableName})", connection))
-            {
-                using (SqliteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        columnNames.Add(reader["name"].ToString());
-                    }
-                }
-            }
-
-            var properties = element.GetType().GetProperties()
-                .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
-
-            // Filter out properties that do not match column names in the database
-            properties = properties.Where(p => columnNames.Contains(p.Name.ToSnakeCase()));
-
-            if (properties.Any())
-            {
-                var columns = string.Join(", ", properties.Select(p => p.Name.ToSnakeCase()));
-                var parameters = string.Join(", ", properties.Select(p => "@" + p.Name));
-
-                var values = new Dictionary<string, object>();
-                foreach (var prop in properties)
-                {
-                    object value = prop.GetValue(element);
-
-                    if (prop.PropertyType == typeof(bool) && Attribute.IsDefined(prop, typeof(SQLiteBoolAttribute)))
-                        value = (bool)value ? 1 : 0;
-
-                    values.Add("@" + prop.Name, value); // The parameter name does not need conversion
-                }
-
-                ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
-            }
-            else
-            {
-                Debug.LogError("No matching columns for properties in " + tableName);
-            }
-            connection.Close();
+            Debug.LogError("Invalid Element.Category: " + element.category);
+            return;
         }
+
+        // Get column names from the table
+        List<string> columnNames = new List<string>();
+        using (SqliteCommand command = new SqliteCommand($"PRAGMA table_info({tableName})", connection))
+        {
+            using (SqliteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    columnNames.Add(reader["name"].ToString());
+                }
+            }
+        }
+
+        var properties = element.GetType().GetProperties()
+            .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
+        foreach (var colname in columnNames)
+        {
+            Debug.Log("columnNames: " +columnNames); 
+        }
+        foreach (var propname in properties)
+        {
+            Debug.Log("propname: " +propname.Name.ToSnakeCase()); 
+        }
+        // Filter out properties that do not match column names in the database
+        properties = properties.Where(p => columnNames.Contains(p.Name.ToSnakeCase()));
+
+        if (properties.Any())
+        {
+            var columns = string.Join(", ", properties.Select(p => p.Name.ToSnakeCase()));
+            var parameters = string.Join(", ", properties.Select(p => "@" + p.Name.ToSnakeCase()));
+            Debug.Log($"Writing to table '{tableName}' with columns: {columns}");
+         
+            var values = new Dictionary<string, object>();
+            foreach (var prop in properties)
+            {
+                object value = prop.GetValue(element);
+
+                if (prop.PropertyType == typeof(bool) && Attribute.IsDefined(prop, typeof(SQLiteBoolAttribute)))
+                    value = (bool)value ? 1 : 0;
+
+                // Convert the property name to snake_case for the parameter dictionary
+                values.Add("@" + prop.Name.ToSnakeCase(), value);
+            }
+
+            ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
+        }
+        else
+        {
+            Debug.LogError("No matching columns for properties in " + tableName);
+        }
+        connection.Close();
     }
+}
+
     
     public void WriteTypingTable(Element.Category category)
     { 
@@ -158,17 +166,11 @@ using System;
 
             foreach (var tblType in typingData)
             {
-                // Prepare data for insert query
-                List<string> columnsList = new List<string> { "types", "types_custom", "subtypes", "subtypes_custom" };
-                List<string> parametersList = new List<string> { "@types", "@types_custom", "@subtypes", "@subtypes_custom" };
-                /*if (tblType.Subtypes != null)
-                    if (tblType.Subtypes.Count > 0)
-                        if (tblType.Subtypes[0] != null)
-                            Debug.Log("REGsubtype" + tblType.Subtypes[0]);
-                if (tblType.SubtypeCustoms != null)
-                 if (tblType.SubtypeCustoms.Count > 0)
-                   if (tblType.SubtypeCustoms[0] != null)
-                      Debug.Log("CUSTOMsubtype" + tblType.SubtypeCustoms[0]);*/
+                // Assume 'types' is the column with the UNIQUE constraint.
+                // Replace the INSERT command with INSERT OR REPLACE
+                string columns = "types, types_custom, subtypes, subtypes_custom";
+                string parameters = "@types, @types_custom, @subtypes, @subtypes_custom";
+
                 var values = new Dictionary<string, object>
                 {
                     { "@types", tblType.Supertype },
@@ -177,14 +179,9 @@ using System;
                     { "@subtypes_custom", string.Join(",", tblType.SubtypeCustoms) }
                 };
 
-                string columns = string.Join(", ", columnsList);
-                string parameters = string.Join(", ", parametersList);
-
-//                Debug.Log($"Writing to database: Subtypes={string.Join(",", tblType.Subtypes)}, SubtypesCustom={string.Join(",", tblType.SubtypeCustoms)}");
-
                 try
                 {
-                    ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
+                    ExecuteQuery($"INSERT OR REPLACE INTO {tableName} ({columns}) VALUES ({parameters})", values);
                 }
                 catch (Exception ex)
                 {
@@ -239,11 +236,12 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
             var properties = obj.GetType().GetProperties().Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
 
             // Compare properties to column names and filter out the non-matching ones
-            properties = properties.Where(p => columnNames.Contains(p.Name));
+            
+            properties = properties.Where(p => columnNames.Contains(p.Name.ToSnakeCase()));
 
             if (properties.Any())
-            {
-                var columns = string.Join(", ", properties.Select(p => p.Name));
+            { 
+                var columns = string.Join(", ", properties.Select(p => p.Name.ToSnakeCase()));
                 var parameters = string.Join(", ", properties.Select(p => "@" + p.Name));
 
                 var values = new Dictionary<string, object>();
@@ -255,17 +253,17 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
                         value = (bool)value ? 1 : 0;
 
                     // Check for empty string in ParentMap or PinnedMap and replace with null
-                    if ((prop.Name == "parent_map" || prop.Name == "pinned_map") && string.IsNullOrEmpty(value as string))
+                    if ((prop.Name.ToSnakeCase() == "parent_map" || prop.Name.ToSnakeCase() == "pinned_map") && string.IsNullOrEmpty(value as string))
                         value = null;
 
                     values.Add("@" + prop.Name, value);
                 }
-
+               
                 ExecuteQuery($"INSERT INTO {tableName} ({columns}) VALUES ({parameters})", values);
             }
             else
             {
-                Debug.LogError("No matching columns for properties in " + tableName);
+                Debug.LogError("No matching columns for properties in " + tableName); 
             }
             connection.Close();
         }

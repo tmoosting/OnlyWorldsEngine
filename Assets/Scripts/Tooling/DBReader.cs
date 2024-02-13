@@ -84,7 +84,7 @@ public class DBReader : ScriptableObject
 
     private string GetScalarValue(string query)
     {
-        string returnString = "NotFound";
+        string returnString = "None";
         using (_dbconn = new SqliteConnection(dbActivePath))
         {
             _dbconn.Open();
@@ -228,8 +228,7 @@ public class DBReader : ScriptableObject
     }
 
     public List<string> GetIDValuesForTable(Element.Category category)
-    {
-        Debug.Log("QUERY table " + category); 
+    { 
         string query = "SELECT id FROM " + category;
         return GetList(query);
     }
@@ -363,15 +362,15 @@ public class DBReader : ScriptableObject
                             Type = _reader["type"].ToString(), 
                             Map = _reader["map"].ToString(), 
                             PinnedMap = _reader["pinned_map"].ToString(), 
-                            Element = _reader["element"].ToString(), 
-                            CoordX = Convert.ToSingle(_reader["coord_x"]),
-                            CoordY = Convert.ToSingle(_reader["coord_y"]),
-                            CoordZ = Convert.ToSingle(_reader["coord_z"]),
-                            Zoomscale = Convert.ToInt32(_reader["zoom_scale"]),
+                            Element = _reader["element"].ToString(),  
+                            CoordX = SafeReadFloat(_reader, "coord_x") ?? default(float),
+                            CoordY = SafeReadFloat(_reader, "coord_y") ?? default(float),
+                            CoordZ = SafeReadFloat(_reader, "coord_z") ?? default(float), 
+                            Zoomscale = SafeReadInt(_reader, "zoom_scale") ?? default(int),
                             ToggleBase = ReadSQLiteBool(SafeGetValue(_reader, "toggle_base"), true), 
                             ToggleColor = ReadSQLiteBool(SafeGetValue(_reader, "toggle_color"), true), 
                             ToggleIcon = ReadSQLiteBool(SafeGetValue(_reader, "toggle_icon"), true), 
-                            ToggleName = ReadSQLiteBool(SafeGetValue(_reader, "toggle_name"), true),  
+                            ToggleName = ReadSQLiteBool(SafeGetValue(_reader, "toggle_name"), true),   
                         };
                         pin.category = (Pin.Category)Enum.Parse(typeof(Pin.Category), pin.Type);
                         returnList.Add(pin);
@@ -382,6 +381,16 @@ public class DBReader : ScriptableObject
         }
         return returnList;
     }
+    private float? SafeReadFloat(IDataReader reader, string columnName)
+    {
+        int index = reader.GetOrdinal(columnName);
+        if (index >= 0 && !reader.IsDBNull(index))
+        {
+            return reader.GetFloat(index);
+        }
+        return null;
+    }
+    
     private object SafeGetValue(IDataReader reader, string columnName)
     {
         int index = reader.GetOrdinal(columnName);
@@ -397,6 +406,16 @@ public class DBReader : ScriptableObject
     
         return Convert.ToInt32(sqliteValue) == 1;
     }
+    private int? SafeReadInt(IDataReader reader, string columnName)
+    {
+        int index = reader.GetOrdinal(columnName);
+        if (index >= 0 && !reader.IsDBNull(index))
+        {
+            return reader.GetInt32(index);
+        }
+        return null; // Or return a default value appropriate for your application's context
+    }
+ 
     public List<string> GetTableNames()
     {
         string query = "SELECT name FROM sqlite_master WHERE type = 'table'";

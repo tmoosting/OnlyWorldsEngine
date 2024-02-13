@@ -11,11 +11,7 @@ using World_Model;
 
 
 public class ViewWindow : EditorWindow
-{ 
-
-
-
-
+{  
     
     #region Instancing
     private static ViewWindow _instance;

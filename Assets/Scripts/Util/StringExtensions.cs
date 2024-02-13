@@ -8,18 +8,16 @@ public static class StringExtensions
         for (int i = 0; i < input.Length; i++)
         {
             char c = input[i];
-            if (char.IsUpper(c))
+            bool isUpperCase = char.IsUpper(c);
+
+            // Corrected logic to avoid IndexOutOfRangeException
+            if (isUpperCase && i > 0 && input[i - 1] != '_' && !(i < 3 && (i == 1 || char.IsUpper(input[i - 1]))))
             {
-                if (i > 0 && input[i - 1] != '_')
-                {
-                    builder.Append('_');
-                }
-                builder.Append(char.ToLower(c));
+                builder.Append('_');
             }
-            else
-            {
-                builder.Append(c);
-            }
+
+            // Always convert to lower case if it's upper case
+            builder.Append(isUpperCase ? char.ToLower(c) : c);
         }
         return builder.ToString();
     }
