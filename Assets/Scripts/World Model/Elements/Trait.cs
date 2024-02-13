@@ -4,7 +4,7 @@ namespace World_Model.Elements
     {
         public Trait()
         {
-            this.table = Element.Table.Trait;
+            this.category = Element.Category.Trait;
         }
     }
 }

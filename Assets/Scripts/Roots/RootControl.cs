@@ -195,7 +195,7 @@ public class RootControl : ScriptableObject
 
     public delegate void WindowRefreshHandler();
     public delegate void WorldChangedHandler(World newWorld);
-    public delegate void TableChangedHandler(Element.Table newTable);
+    public delegate void TableChangedHandler(Element.Category newCategory);
     public delegate void ElementChangedHandler(Element newElement);
     public delegate void ElementEditedHandler(Element newElement);
    // public delegate void FieldChangedHandler(Field newField);
@@ -268,24 +268,24 @@ public class RootControl : ScriptableObject
         skipNextWorldInvoke = skipInvoke;
         World = world;
     }
-    private Element.Table _table;
-    public Element.Table Table
+    private Element.Category _category;
+    public Element.Category Category
     {
-        get { return _table; }
+        get { return _category; }
         private  set
         {
-            _table = value; 
+            _category = value; 
             if (skipNextTableInvoke)
                 skipNextPinInvoke = false;
             else 
-                OnTableChanged?.Invoke(_table);
+                OnTableChanged?.Invoke(_category);
         }
     }
     private bool skipNextTableInvoke = false;
-    public void SetTable(Element.Table table, bool skipInvoke = false)
+    public void SetTable(Element.Category category, bool skipInvoke = false)
     {
         skipNextTableInvoke = skipInvoke;
-        Table =table;
+        Category =category;
     }
     private Element _element;
     public Element Element
@@ -408,7 +408,7 @@ public class RootControl : ScriptableObject
         List<Element> returnList = new List<Element>();
 
         // Loop through all the values in the Table enum
-        foreach (Element.Table table in Enum.GetValues(typeof(Element.Table)))
+        foreach (Element.Category table in Enum.GetValues(typeof(Element.Category)))
         {
             var elementsFromTable =  GetElementsOfTable(table);
             if (elementsFromTable != null)
@@ -417,48 +417,48 @@ public class RootControl : ScriptableObject
         return returnList;
     }
 
-    public List<Element> GetElementsOfTable(Element.Table table)
+    public List<Element> GetElementsOfTable(Element.Category category)
     { 
-        switch (table)
+        switch (category)
         {
-            case Element.Table.Character:
+            case Element.Category.Character:
                 return World.Characters.Cast<Element>().ToList();
-            case Element.Table.Force:
+            case Element.Category.Force:
                 return World.Forces.Cast<Element>().ToList();
-            case Element.Table.Event:
+            case Element.Category.Event:
                 return World.Events.Cast<Element>().ToList();
-            case Element.Table.Relation:
+            case Element.Category.Relation:
                 return World.Relations.Cast<Element>().ToList();
-            case Element.Table.Collective:
+            case Element.Category.Collective:
                 return World.Collectives.Cast<Element>().ToList();
-            case Element.Table.Concept:
+            case Element.Category.Construct:
                 return World.Concepts.Cast<Element>().ToList();
-            case Element.Table.Creature:
+            case Element.Category.Creature:
                 return World.Creatures.Cast<Element>().ToList();
-            case Element.Table.Location:
+            case Element.Category.Location:
                 return World.Locations.Cast<Element>().ToList();
-            case Element.Table.Object:
+            case Element.Category.Object:
                 return World.Objects.Cast<Element>().ToList();
-            case Element.Table.Institution:
+            case Element.Category.Institution:
                 return World.Institutions.Cast<Element>().ToList();
-            case Element.Table.Territory:
+            case Element.Category.Territory:
                 return World.Territorys.Cast<Element>().ToList();
-            case Element.Table.Title:
+            case Element.Category.Title:
                 return World.Titles.Cast<Element>().ToList();
-            case Element.Table.Race:
+            case Element.Category.Species:
                 return World.Races.Cast<Element>().ToList();
-            case Element.Table.Family:
+            case Element.Category.Family:
                 return World.Familys.Cast<Element>().ToList();  
-            case Element.Table.Trait:
+            case Element.Category.Trait:
                 return World.Traits.Cast<Element>().ToList();
-            case Element.Table.Law:
+            case Element.Category.Law:
                 return World.Laws.Cast<Element>().ToList();  
-            case Element.Table.Language:
+            case Element.Category.Language:
                 return World.Languages.Cast<Element>().ToList();        
-            case Element.Table.Ability:
+            case Element.Category.Ability:
                 return World.Abilitys.Cast<Element>().ToList();
             default:
-                Debug.LogError($"Unsupported table: {table}");
+                Debug.LogError($"Unsupported table: {category}");
                 return null;
         }
     }

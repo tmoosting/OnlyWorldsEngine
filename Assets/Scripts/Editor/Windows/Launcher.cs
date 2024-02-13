@@ -118,7 +118,9 @@ public class Launcher : EditorWindow
     private void DropdownLogic()
     {
         var worldNames = RootControl.WorldParser.GetWorldsFileNames();
-        
+
+        if (worldNames.Contains("Default"))
+            worldNames.Remove("Default");
         dropdownFieldWorlds.choices = worldNames;
         if (worldNames.Count > 0)
             dropdownFieldWorlds.value = worldNames[0];

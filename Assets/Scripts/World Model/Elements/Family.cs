@@ -4,7 +4,7 @@ namespace World_Model.Elements
     {
         public Family()
         {
-            this.table = Element.Table.Family;
+            this.category = Element.Category.Family;
         }
     }
 }

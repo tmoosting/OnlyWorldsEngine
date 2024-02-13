@@ -5,7 +5,7 @@ namespace World_Model.Elements
 
         public Force()
         {
-            this.table = Element.Table.Force;
+            this.category = Element.Category.Force;
         }
 
 

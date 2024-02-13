@@ -9,7 +9,7 @@ namespace World_Model.Elements
 
         public Object()
         {
-            this.table = Element.Table.Object;
+            this.category = Element.Category.Object;
         }
     }
 

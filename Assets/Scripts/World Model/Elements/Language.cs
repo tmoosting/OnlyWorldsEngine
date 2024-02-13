@@ -4,7 +4,7 @@ namespace World_Model.Elements
     {
         public Language()
         {
-            this.table = Element.Table.Language;
+            this.category = Element.Category.Language;
         }
     }
 }

@@ -326,7 +326,7 @@ public class PinSubWindow : VisualElement
         tempPinElementTypeDropdown.style.flexShrink = 1;
         tempPinElementTypeDropdown.style.width = Length.Percent(100);
         tempPinElementTypeDropdown.RegisterValueChangedCallback(OnTempPinElementTypeDropdownChange);
-        List<string> elementTypeDropdownChoices =  Enum.GetNames(typeof(Element.Table  )).ToList();
+        List<string> elementTypeDropdownChoices =  Enum.GetNames(typeof(Element.Category  )).ToList();
         tempPinElementTypeDropdown.choices = elementTypeDropdownChoices;
         tempPinElementTypeDropdown.value = elementTypeDropdownChoices[0];
         elementTypeDropdownCombo.Add(elementTypeDropdownLabel);
@@ -534,7 +534,7 @@ public class PinSubWindow : VisualElement
         tempPinNameField.value = element.Name;
         tempPinNameField.SetEnabled(false);
         tempPinElementIDField.value = element.ID;
-        tempPinElementTypeDropdown.SetValueWithoutNotify(element.table.ToString());
+        tempPinElementTypeDropdown.SetValueWithoutNotify(element.category.ToString());
         tempPinElementTypeDropdown.SetEnabled(false);
         tempPinElementCreateButton.text = "Create Pin for Element";
     }

@@ -7,7 +7,7 @@ namespace World_Model.Elements
     
         public Ability()
         {
-            this.table = Element.Table.Ability;
+            this.category = Element.Category.Ability;
         }
     }
 }

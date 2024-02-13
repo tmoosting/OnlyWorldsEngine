@@ -5,7 +5,7 @@ namespace World_Model.Elements
 
         public Relation()
         {
-            this.table = Element.Table.Relation;
+            this.category = Element.Category.Relation;
         }
 
 

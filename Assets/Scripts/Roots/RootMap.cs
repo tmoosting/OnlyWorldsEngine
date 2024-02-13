@@ -88,7 +88,7 @@ public class RootMap : ScriptableObject
         highlightMode = false;
         pinScaling = 1f;
         filterMode = RootMap.FilterMode.None;
-        includedElementTables = new List<Element.Table>();
+        includedElementTables = new List<Element.Category>();
     }
 
     public List<string> GetUnpinnedMapNames()
@@ -153,14 +153,14 @@ public class RootMap : ScriptableObject
             Debug.LogWarning("! No pinBannerSprite assigned!");
         return pinBannerSprite;
     }
-    public Sprite GetPinCenterIconSprite(Element.Table table)
+    public Sprite GetPinCenterIconSprite(Element.Category category)
     {
-        return RootControl.RootView.GetSelectorSprite(table.ToString());
+        return RootControl.RootView.GetSelectorSprite(category.ToString());
     }
     public void CreateElementAndPin(PinElement pinElement, string elementName, string elementType)
     {
-        Element.Table elementTable = (Element.Table)Enum.Parse(typeof(Element.Table), elementType); 
-        Element newElement =  RootControl.RootEdit.CreateElement(elementTable, elementName);
+        Element.Category elementCategory = (Element.Category)Enum.Parse(typeof(Element.Category), elementType); 
+        Element newElement =  RootControl.RootEdit.CreateElement(elementCategory, elementName);
         CreatePin(Pin.Category.Element, newElement.Name, new Vector2( pinElement.relativeX, pinElement.relativeY),newElement.ID );
         RootControl.SetElement(newElement);
     }
@@ -291,7 +291,7 @@ public class RootMap : ScriptableObject
     }
 
     [HideInInspector] public FilterMode filterMode;
-    public List<Element.Table> includedElementTables;
+    public List<Element.Category> includedElementTables;
     
     public void RebuildPinElements()
     {  
@@ -321,7 +321,7 @@ public class RootMap : ScriptableObject
                     }
                     else
                     {
-                        if (activePinElement.pin.category == Pin.Category.Element && includedElementTables.Contains( GetElementForPin(activePinElement.pin).table))
+                        if (activePinElement.pin.category == Pin.Category.Element && includedElementTables.Contains( GetElementForPin(activePinElement.pin).category))
                             activePinElement.SetTransparencyFull();
                         else
                             activePinElement.SetTransparencyHidden();
@@ -509,9 +509,8 @@ public class RootMap : ScriptableObject
     {
         if (mapID == null)
         {
-            if (RootControl.Map == null)
-                Debug.LogWarning("!Attempting to infer Map but none is active! Error!");
-            mapID = RootControl.Map.ID;
+     //       if (RootControl.Map.ID == null)
+                return false; 
         }
         foreach (var worldPin in RootControl.GetPinsForCurrentMap())
             if (worldPin.Element == element.ID) 

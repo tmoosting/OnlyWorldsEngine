@@ -125,7 +125,7 @@ public class EditWindow : EditorWindow
     {
         BuildWindow();
     }
-    private void RefreshTable(Element.Table newTable)
+    private void RefreshTable(Element.Category newCategory)
     {
     }
     private void RefreshElement(Element newElement)
@@ -245,7 +245,7 @@ public class EditWindow : EditorWindow
 
         typeDropdown = new BlueDropdownField(RootControl, "Supertype", fieldsContent.resolvedStyle.width, OnSupertypeValueChange);
         List<string> tableTypes = new List<string>();
-        foreach (var tableTyping in RootControl.WorldParser.GetTypingTablesForElementTable(element.table))
+        foreach (var tableTyping in RootControl.WorldParser.GetTypingTablesForElementTable(element.category))
             tableTypes.Add(tableTyping.GetPotentialCustomSupertype());
         typeDropdown.Dropdown.choices = tableTypes;
         typeDropdown.Dropdown.SetValueWithoutNotify( RootControl.WorldParser.GetPotentialCustomSupertypeForElement( element));

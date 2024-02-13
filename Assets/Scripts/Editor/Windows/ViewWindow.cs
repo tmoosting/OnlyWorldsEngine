@@ -130,7 +130,7 @@ public class ViewWindow : EditorWindow
         RefreshResults();
         RebuildCustomization();
     }
-    private void RefreshTable(Element.Table newTable)
+    private void RefreshTable(Element.Category newCategory)
     { 
         BuildWindow();
     }
@@ -456,23 +456,23 @@ public class ViewWindow : EditorWindow
            ElementSelectorsFour = new SelectorRow(RootView.ElementSelectorHeight); 
            ElementSelectorsFive = new SelectorRow(RootView.ElementSelectorHeight); 
 
-           CategorySelectors.Add (   new CategorySelector (1,Element.Table.Character.ToString(), RootView.GetSelectorSprite(Element.Table.Character.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
-           CategorySelectors.Add (   new CategorySelector (2,Element.Table.Object.ToString(), RootView.GetSelectorSprite(Element.Table.Object.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
-           CategorySelectors.Add (   new CategorySelector (3,Element.Table.Location.ToString(), RootView.GetSelectorSprite(Element.Table.Location.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
-           ElementSelectorsOne.Add (   new ElementSelector(Element.Table.Family.ToString(), RootView.GetSelectorSprite(Element.Table.Family.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsOne.Add (   new ElementSelector(Element.Table.Territory.ToString(), RootView.GetSelectorSprite(Element.Table.Territory.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsOne.Add (   new ElementSelector(Element.Table.Institution.ToString(), RootView.GetSelectorSprite(Element.Table.Institution.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsTwo.Add (   new ElementSelector(Element.Table.Race.ToString(), RootView.GetSelectorSprite(Element.Table.Race.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsTwo.Add (   new ElementSelector(Element.Table.Creature.ToString(), RootView.GetSelectorSprite(Element.Table.Creature.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsTwo.Add (   new ElementSelector(Element.Table.Collective.ToString(), RootView.GetSelectorSprite(Element.Table.Collective.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsThree.Add (   new ElementSelector(Element.Table.Trait.ToString(), RootView.GetSelectorSprite(Element.Table.Trait.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsThree.Add (   new ElementSelector(Element.Table.Force.ToString(), RootView.GetSelectorSprite(Element.Table.Force.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsThree.Add (   new ElementSelector(Element.Table.Title.ToString(), RootView.GetSelectorSprite(Element.Table.Title.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsFour.Add (   new ElementSelector(Element.Table.Ability.ToString(), RootView.GetSelectorSprite(Element.Table.Event.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsFour.Add (   new ElementSelector(Element.Table.Language.ToString(), RootView.GetSelectorSprite(Element.Table.Language.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-             ElementSelectorsFour.Add (   new ElementSelector(Element.Table.Law.ToString(), RootView.GetSelectorSprite(Element.Table.Law.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsFive.Add (   new ElementSelector(Element.Table.Relation.ToString(), RootView.GetSelectorSprite(Element.Table.Relation.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
-           ElementSelectorsFive.Add (   new ElementSelector(Element.Table.Event.ToString(), RootView.GetSelectorSprite(Element.Table.Event.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           CategorySelectors.Add (   new CategorySelector (1,Element.Category.Character.ToString(), RootView.GetSelectorSprite(Element.Category.Character.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
+           CategorySelectors.Add (   new CategorySelector (2,Element.Category.Object.ToString(), RootView.GetSelectorSprite(Element.Category.Object.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
+           CategorySelectors.Add (   new CategorySelector (3,Element.Category.Location.ToString(), RootView.GetSelectorSprite(Element.Category.Location.ToString()), LeftClickCategorySelector, RightClickCategorySelector, HoverEnterCategorySelector, HoverExitCategorySelector, MiddleClickCategorySelector, LeftMouseKeyUp));
+           ElementSelectorsOne.Add (   new ElementSelector(Element.Category.Family.ToString(), RootView.GetSelectorSprite(Element.Category.Family.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsOne.Add (   new ElementSelector(Element.Category.Territory.ToString(), RootView.GetSelectorSprite(Element.Category.Territory.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsOne.Add (   new ElementSelector(Element.Category.Institution.ToString(), RootView.GetSelectorSprite(Element.Category.Institution.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsTwo.Add (   new ElementSelector(Element.Category.Species.ToString(), RootView.GetSelectorSprite(Element.Category.Species.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsTwo.Add (   new ElementSelector(Element.Category.Creature.ToString(), RootView.GetSelectorSprite(Element.Category.Creature.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsTwo.Add (   new ElementSelector(Element.Category.Collective.ToString(), RootView.GetSelectorSprite(Element.Category.Collective.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsThree.Add (   new ElementSelector(Element.Category.Trait.ToString(), RootView.GetSelectorSprite(Element.Category.Trait.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsThree.Add (   new ElementSelector(Element.Category.Force.ToString(), RootView.GetSelectorSprite(Element.Category.Force.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsThree.Add (   new ElementSelector(Element.Category.Title.ToString(), RootView.GetSelectorSprite(Element.Category.Title.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsFour.Add (   new ElementSelector(Element.Category.Ability.ToString(), RootView.GetSelectorSprite(Element.Category.Event.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsFour.Add (   new ElementSelector(Element.Category.Language.ToString(), RootView.GetSelectorSprite(Element.Category.Language.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+             ElementSelectorsFour.Add (   new ElementSelector(Element.Category.Law.ToString(), RootView.GetSelectorSprite(Element.Category.Law.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsFive.Add (   new ElementSelector(Element.Category.Relation.ToString(), RootView.GetSelectorSprite(Element.Category.Relation.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
+           ElementSelectorsFive.Add (   new ElementSelector(Element.Category.Event.ToString(), RootView.GetSelectorSprite(Element.Category.Event.ToString()), LeftClickElementSelector, RightClickElementSelector, HoverEnterElementSelector, HoverExitElementSelector, MiddleClickElementSelector, LeftMouseKeyUp));
 
            if (SelectorsRoot == null)
                SelectorsRoot = new VisualElement();
@@ -730,7 +730,7 @@ public class ViewWindow : EditorWindow
 
        private SquareDropdown fieldDropdown;
        private SquareDropdown orderDropdown; 
-       private Element.Table  singleTable;
+       private Element.Category  _singleCategory;
        private SlideBar BuildSortBar()
        {
            var leftRowOne = new SimpleRow();
@@ -888,14 +888,14 @@ public class ViewWindow : EditorWindow
            
            if (oneTableSelected)
            {
-               Element.Table table = (Element.Table)Enum.Parse(typeof(Element.Table), singleSelectedSelector.name);
+               Element.Category category = (Element.Category)Enum.Parse(typeof(Element.Category), singleSelectedSelector.name);
                
-               if (singleSelectedSelector.name == Element.Table.Character.ToString())
+               if (singleSelectedSelector.name == Element.Category.Character.ToString())
                    CreateCustomizeContentForCharacterTyping();
-               else    if (singleSelectedSelector.name == Element.Table.Object.ToString())
+               else    if (singleSelectedSelector.name == Element.Category.Object.ToString())
                    CreateCustomizeContentForMatterTyping(); 
                else    
-                   CreateCustomizeContentForDefaultTyping(table); 
+                   CreateCustomizeContentForDefaultTyping(category); 
            }
            else
            {
@@ -915,9 +915,9 @@ public class ViewWindow : EditorWindow
        
        private List<TableTyping> typingTableList;
 
-       private void CreateCustomizeContentForDefaultTyping(Element.Table table)
+       private void CreateCustomizeContentForDefaultTyping(Element.Category category)
        {
-           typingTableList = RootControl.WorldParser.GetTypingTablesForElementTable(table).ToList();
+           typingTableList = RootControl.WorldParser.GetTypingTablesForElementTable(category).ToList();
 
            CreateHeaderLabels();
            CreateEditFields();
@@ -1361,7 +1361,7 @@ public class ViewWindow : EditorWindow
            includedTableNames.AddRange(from elementSelector in ElementSelectorsFive.GetElementSelectors() where elementSelector.Activated select elementSelector.name);
 
            // parse to element table types
-           List<Element.Table> includedTables = includedTableNames.Select(includedTableName => (Element.Table)Enum.Parse(typeof(Element.Table), includedTableName)).ToList();
+           List<Element.Category> includedTables = includedTableNames.Select(includedTableName => (Element.Category)Enum.Parse(typeof(Element.Category), includedTableName)).ToList();
            List<Element> potentialElements = includedTables.SelectMany(table => RootControl.GetElementsOfTable(table)).ToList();
         
  

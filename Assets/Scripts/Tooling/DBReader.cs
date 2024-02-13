@@ -17,48 +17,48 @@ public class DBReader : ScriptableObject
     private  string dbActivePath = "URI=file:" + Application.dataPath + "/DefaultWorld.db";
 
 
-    public string GetElementMetaDescription(Element.Table table) // todo fill this
+    public string GetElementMetaDescription(Element.Category category) // todo fill this
     { 
-        switch (table)
+        switch (category)
         {
-            case Element.Table.Character:
+            case Element.Category.Character:
                 return "Sentient being, probably humanoid";
-            case Element.Table.Force:
+            case Element.Category.Force:
                 return "Does it matter if it's real";
-            case Element.Table.Event:
+            case Element.Category.Event:
                 return "";
-            case Element.Table.Relation:
+            case Element.Category.Relation:
                 return "";
-            case Element.Table.Collective:
+            case Element.Category.Collective:
                 return "";
-            case Element.Table.Concept:
+            case Element.Category.Construct:
                 return "";
-            case Element.Table.Creature:
+            case Element.Category.Creature:
                 return "";
-            case Element.Table.Location:
+            case Element.Category.Location:
                 return "";
-            case Element.Table.Object:
+            case Element.Category.Object:
                 return "";
-            case Element.Table.Institution:
+            case Element.Category.Institution:
                 return "";
-            case Element.Table.Territory:
+            case Element.Category.Territory:
                 return "";
-            case Element.Table.Title:
+            case Element.Category.Title:
                 return "";
-            case Element.Table.Race:
+            case Element.Category.Species:
                 return "";
-            case Element.Table.Family:
+            case Element.Category.Family:
                 return "";
-            case Element.Table.Trait:
+            case Element.Category.Trait:
                 return "";
-            case Element.Table.Law:
+            case Element.Category.Law:
                 return "";
-            case Element.Table.Language:
+            case Element.Category.Language:
                 return "";  
-            case Element.Table.Ability:
+            case Element.Category.Ability:
                 return "";
             default:
-                Debug.LogError($"Unsupported table: {table}");
+                Debug.LogError($"Unsupported table: {category}");
                 return null;
         }
     }
@@ -155,22 +155,22 @@ public class DBReader : ScriptableObject
                         TableTyping tblType = new TableTyping
                         {
                       //      Supertype = _reader["Types"].ToString(),
-                            TypeCustom = _reader["TypesCustom"].ToString(),
+                            TypeCustom = _reader["types_custom"].ToString(),
                             // Initialize Subtypes and SubtypeCustoms with a single empty string
                        //     Subtypes = new List<string> { "" },
                             SubtypeCustoms = new List<string> { "" }
                         };
-                        tblType.SetSupertype(_reader["Types"].ToString());
+                        tblType.SetSupertype(_reader["types"].ToString());
                         tblType.SetSubtype(new List<string> { "" });
                         
-                        string subtypes = _reader["Subtypes"].ToString();
+                        string subtypes = _reader["subtypes"].ToString();
                         if (!string.IsNullOrEmpty(subtypes))
                         {
                             tblType.SetSubtype( subtypes.Split(',').ToList());
                             //     tblType.Subtypes = subtypes.Split(',').ToList();
                         }
 
-                        string subtypeCustoms = _reader["SubtypesCustom"].ToString();
+                        string subtypeCustoms = _reader["subtypes_custom"].ToString();
                         if (!string.IsNullOrEmpty(subtypeCustoms))
                         {
                             tblType.SubtypeCustoms = subtypeCustoms.Split(',').ToList();
@@ -181,7 +181,7 @@ public class DBReader : ScriptableObject
                         {
                             tblType.SubtypeCustoms.Add("");
                         }
-
+                        
                         tableTypes.Add(tblType);
                     }
                 }
@@ -192,115 +192,24 @@ public class DBReader : ScriptableObject
     }
 
 
-    
-    
-    // Uses the column-per-Type for subtypes that I never quite got proper working
-    /*
-    public List<TableTyping> GetTableTyping(string tableName)
-{
-    List<TableTyping> tableTypes = new List<TableTyping>();
-    string query = $"SELECT * FROM {tableName}Typing";   
+      
 
-    using (_dbconn = new SqliteConnection(dbActivePath))
-    {
-        _dbconn.Open();
-        using (_dbcmd = _dbconn.CreateCommand())
-        {
-            _dbcmd.CommandText = query;
-            using (_reader = _dbcmd.ExecuteReader())
-            {
-                Dictionary<int, string> typesDict = new Dictionary<int, string>();
-                Dictionary<int, string> customTypesDict = new Dictionary<int, string>();
-
-                int typeIndex = 1;
-                int customTypeIndex = 1;
-
-                while (_reader.Read())
-                {
-                    string type = _reader["Types"].ToString();
-                    if(!string.IsNullOrEmpty(type))
-                    {
-                        typesDict[typeIndex] = type;
-                        typeIndex++;
-                    }
-                    
-                    string customType = _reader["TypesCustom"].ToString();
-                    if(!string.IsNullOrEmpty(customType))
-                    {
-                        customTypesDict[customTypeIndex] = customType;
-                    }
-                    else
-                    {
-                        customTypesDict[customTypeIndex] = null;
-                    }
-                    customTypeIndex++;
-                }
-                
-               
-                // Reset the reader
-                _reader.Close();
-                _dbcmd.CommandText = query;
-                _reader = _dbcmd.ExecuteReader();
-
-                foreach(var kvp in typesDict)
-                {
-                    TableTyping tblType = new TableTyping
-                    {
-                        Supertype = kvp.Value, 
-                        Subtypes = new List<string>(),
-                        SubtypeCustoms = new List<string>()
-                    };
-
-                    if (customTypesDict[kvp.Key] != null)
-                        tblType.TypeCustom = customTypesDict[kvp.Key];
-                    while (_reader.Read())
-                    {
-                     
-
-                        var subtypeValue = _reader[$"Subtypes{kvp.Key}"]?.ToString();
-                        if (!string.IsNullOrEmpty(subtypeValue))
-                            tblType.Subtypes.Add(subtypeValue);
-
-                        var subtypeCustomValue = _reader[$"SubtypesCustom{kvp.Key}"]?.ToString();
-                     //   if (!string.IsNullOrEmpty(subtypeCustomValue))
-                            tblType.SubtypeCustoms.Add(subtypeCustomValue);
-                    }
-                    // Reset the reader for the next type
-                    _reader.Close();
-                    _dbcmd.CommandText = query;
-                    _reader = _dbcmd.ExecuteReader();
-
-                    tableTypes.Add(tblType);
-                }
-            }
-        }
-        _dbconn.Close();
-    }
-
-    return tableTypes;
-}
-*/
-
-
-
- 
-
-    public List<T> GetAllElementsOfType<T>(Element.Table table) where T : Element
+    public List<T> GetAllElementsOfType<T>(Element.Category category) where T : Element
     {
         List<Element> elements = new List<Element>();
-        foreach (string id in GetIDValuesForTable(table))
+        foreach (string id in GetIDValuesForTable(category))
         { 
             Dictionary<string, string> fieldNamesAndValues = new Dictionary<string, string>();
-            foreach (string field in GetFieldNamesForTable(table))            
-                fieldNamesAndValues.Add(field, GetEntryForTableAndFieldWithID(table, field, id));            
-            elements.Add(AssembleElementOfTypeFromFields(table, fieldNamesAndValues));
+            foreach (string field in GetFieldNamesForTable(category))            
+                fieldNamesAndValues.Add(field, GetEntryForTableAndFieldWithID(category, field, id));            
+            elements.Add(AssembleElementOfTypeFromFields(category, fieldNamesAndValues));
         }
         return ConvertList<T>(elements);
     }
-    public List<string> GetFieldNamesForTable(Element.Table elementTable)
+    public List<string> GetFieldNamesForTable(Element.Category elementCategory)
     {
         List<string> returnList = new List<string>();
-        string query = "SELECT * FROM " + elementTable;
+        string query = "SELECT * FROM " + elementCategory;
         using (_dbconn = new SqliteConnection(dbActivePath))
         {
             _dbconn.Open();
@@ -318,76 +227,79 @@ public class DBReader : ScriptableObject
         return returnList;
     }
 
-    public List<string> GetIDValuesForTable(Element.Table table)
+    public List<string> GetIDValuesForTable(Element.Category category)
     {
-        string query = "SELECT ID FROM " + table;
+        Debug.Log("QUERY table " + category); 
+        string query = "SELECT id FROM " + category;
         return GetList(query);
     }
 
-    public string GetEntryForTableAndFieldWithID(Element.Table table, string fieldName, string ID )
+    public string GetEntryForTableAndFieldWithID(Element.Category category, string fieldName, string id )
     { 
-        string query = "SELECT " + fieldName + " FROM " + table + " WHERE ID='" + ID + "'";
+        string query = "SELECT " + fieldName + " FROM " + category + " WHERE id='" + id + "'";
         return GetScalarValue(query);
     }
 
-    private Element AssembleElementOfTypeFromFields(Element.Table table, Dictionary<string, string> dict)
+  private Element AssembleElementOfTypeFromFields(Element.Category category, Dictionary<string, string> dict)
+{
+    // Convert the enum type to string
+    string typeName = $"World_Model.Elements.{category.ToString()}";
+
+    // Get the assembly that the class is in
+    var assembly = Assembly.GetExecutingAssembly();
+
+    var elementType = assembly.GetType(typeName);
+     
+    var element = Activator.CreateInstance(elementType) as Element;
+
+    if (element != null)
     {
-        // Convert the enum type to string
-        string typeName = table.ToString();
-
-        // Get the assembly that the class is in
-        var assembly = Assembly.GetExecutingAssembly();
-
-        // Get the Type object from the assembly
-        var elementType = assembly.GetType(typeName);
-
-        // Instantiate the type
-        var element = Activator.CreateInstance(elementType) as Element;
-
-        if (element != null)
+        foreach (var property in elementType.GetProperties())
         {
-            foreach (KeyValuePair<string, string> field in dict)
+            // Convert the property name to snake_case to match database column names
+            string dbName = property.Name.ToSnakeCase();
+
+            if (dict.TryGetValue(dbName, out string value))
             {
-                PropertyInfo property = elementType.GetProperty(field.Key);
-                if (property != null && property.CanWrite)
+                Type propertyType = property.PropertyType;
+                object convertedValue = null;
+
+                if (propertyType == typeof(int))
                 {
-                    Type propertyType = property.PropertyType;
-                    object value = null;
-                    // Handle conversion for different types
-                    if (propertyType == typeof(int))
-                    {
-                        int intValue;
-                        if (int.TryParse(field.Value, out intValue))
-                            value = intValue;
-                    }
-                    else if (propertyType == typeof(double))
-                    {
-                        double doubleValue;
-                        if (double.TryParse(field.Value, out doubleValue))
-                            value = doubleValue;
-                        
-                    }
-                    else if (propertyType == typeof(bool) && Attribute.IsDefined(property, typeof(SQLiteBoolAttribute)))
-                    {
-                        value = field.Value == "1";
-                    }
-                    else if (propertyType == typeof(bool))
-                    {
-                        bool boolValue;
-                        if (bool.TryParse(field.Value, out boolValue))
-                            value = boolValue;
-                    }
-                    
-                    else
-                        value = field.Value; 
-                    
-                    if (value != null)
-                        property.SetValue(element, value);
+                    convertedValue = int.TryParse(value, out int intValue) ? intValue : default(int?);
+                }
+                else if (propertyType == typeof(double))
+                {
+                    convertedValue = double.TryParse(value, out double doubleValue) ? doubleValue : default(double?);
+                }
+                else if (propertyType == typeof(bool) && Attribute.IsDefined(property, typeof(SQLiteBoolAttribute)))
+                {
+                    convertedValue = value == "1";
+                }
+                else if (propertyType == typeof(bool))
+                {
+                    convertedValue = bool.TryParse(value, out bool boolValue) ? boolValue : default(bool?);
+                }
+                else
+                {
+                    convertedValue = value; // Directly assign string and other types
+                }
+
+                if (convertedValue != null)
+                {
+                    property.SetValue(element, convertedValue);
                 }
             }
         }
-        return element;
     }
+
+    if (string.IsNullOrEmpty(element.Supertype))
+        element.Supertype = "None";
+    if (string.IsNullOrEmpty(element.Subtype))
+        element.Subtype = "None";
+    return element;
+}
+
    
     public List<Map> GetAllMaps()
     {
@@ -451,13 +363,13 @@ public class DBReader : ScriptableObject
                             Description = _reader["description"].ToString(), 
                             Type = _reader["type"].ToString(), 
                             Map = _reader["map"].ToString(), 
-                            PinnedMap = _reader["pinne_map"].ToString(), 
-                            Element = _reader["Element"].ToString(), 
+                            PinnedMap = _reader["pinned_map"].ToString(), 
+                            Element = _reader["element"].ToString(), 
                             CoordX = Convert.ToSingle(_reader["coord_x"]),
                             CoordY = Convert.ToSingle(_reader["coord_y"]),
                             CoordZ = Convert.ToSingle(_reader["coord_z"]),
                             Zoomscale = Convert.ToInt32(_reader["zoom_scale"]),
-                            ToggleBase = ReadSQLiteBool(SafeGetValue(_reader, "toggle_Base"), true), 
+                            ToggleBase = ReadSQLiteBool(SafeGetValue(_reader, "toggle_base"), true), 
                             ToggleColor = ReadSQLiteBool(SafeGetValue(_reader, "toggle_color"), true), 
                             ToggleIcon = ReadSQLiteBool(SafeGetValue(_reader, "toggle_icon"), true), 
                             ToggleName = ReadSQLiteBool(SafeGetValue(_reader, "toggle_name"), true),  
@@ -491,72 +403,7 @@ public class DBReader : ScriptableObject
         string query = "SELECT name FROM sqlite_master WHERE type = 'table'";
         return GetList(query);
     }
-    /*public List<Element> GetAllElementsOfType(Element.Table table)
- {
-     List<Element> returnList = new List<Element>();
-     foreach (string id in GetIDValuesForTable(table))
-     { 
-         Dictionary<string, string> fieldNamesAndValues = new Dictionary<string, string>();
-         foreach (string field in GetFieldNamesForTable(table))            
-             fieldNamesAndValues.Add(field, GetEntryForTableAndFieldWithID(table, field, id));            
-         returnList.Add(AssembleElementOfTypeFromFields(table, fieldNamesAndValues));
-     }
-     return returnList;
- }*/
-    //todo-cleanup: replace above map and pin read functions to this one, except fix map having a TypeString property that mismatches with Table: Type
-     /*public List<T> GetAllObjects<T>(string tableName) where T : new()
-    {
-        List<T> returnList = new List<T>();
-        string query = $"SELECT * FROM {tableName}";
-
-        using (_dbconn = new SqliteConnection(dbActivePath))
-        {
-            _dbconn.Open();
-            using (_dbcmd = _dbconn.CreateCommand())
-            {
-                _dbcmd.CommandText = query;
-                using (_reader = _dbcmd.ExecuteReader())
-                {
-                    while (_reader.Read())
-                    {
-                        T obj = new T();
-                        foreach (var prop in typeof(T).GetProperties())
-                        {
-                            if (!Equals(_reader[prop.Name], DBNull.Value))
-                            {
-                                if (prop.PropertyType == typeof(float))
-                                {
-                                    prop.SetValue(obj, Convert.ToSingle(_reader[prop.Name]));
-                                }
-                                else if (prop.PropertyType == typeof(int))
-                                {
-                                    prop.SetValue(obj, Convert.ToInt32(_reader[prop.Name]));
-                                }
-                                else
-                                {
-                                    prop.SetValue(obj, _reader[prop.Name].ToString());
-                                }
-                            }
-                        }
-
-                        // Special case for the Map type
-                        if (typeof(T) == typeof(Map))
-                        {
-                            Map map = obj as Map;
-                            if (Enum.TryParse(map.TypeString, out Map.Type mapType))
-                            {
-                                map.type = mapType;
-                            }
-                        }
-                        returnList.Add(obj);
-                    }
-                }
-            }
-            _dbconn.Close();
-        }
-        return returnList;
-    }*/
-    
+  
     
     private RootControl _rootControl;
     private RootControl RootControl

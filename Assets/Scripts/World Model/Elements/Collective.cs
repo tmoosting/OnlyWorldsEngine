@@ -6,7 +6,7 @@ namespace World_Model.Elements
    
         public Collective()
         {
-            this.table = Element.Table.Collective;
+            this.category = Element.Category.Collective;
         }
     
     }

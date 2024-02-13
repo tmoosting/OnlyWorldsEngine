@@ -10,7 +10,7 @@ namespace World_Model.Elements
 
         public Event()
         { 
-            this.table = Element.Table.Event;
+            this.category = Element.Category.Event;
         }
 
 

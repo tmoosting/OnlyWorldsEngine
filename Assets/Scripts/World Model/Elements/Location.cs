@@ -8,7 +8,7 @@ namespace World_Model.Elements
 
         public Location()
         {
-            this.table = Element.Table.Location;
+            this.category = Element.Category.Location;
         }
    
     }

@@ -5,7 +5,7 @@ namespace World_Model.Elements
 
         public Territory()
         {
-            this.table = Element.Table.Territory;
+            this.category = Element.Category.Territory;
         }
 
     }

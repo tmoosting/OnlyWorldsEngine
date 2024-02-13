@@ -6,7 +6,7 @@ namespace World_Model.Elements
   
         public Institution()
         {
-            this.table = Element.Table.Institution;
+            this.category = Element.Category.Institution;
         }
 
     }

@@ -4,7 +4,7 @@ namespace World_Model.Elements
     {
         public Law()
         {
-            this.table = Element.Table.Law;
+            this.category = Element.Category.Law;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace World_Model.Elements
 
     public Character()
     {
-      this.table = Element.Table.Character;
+      this.category = Element.Category.Character;
     }
 
   }

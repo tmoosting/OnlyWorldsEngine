@@ -25,7 +25,7 @@ public class WorldParser : ScriptableObject
 
       public string GetOriginalSupertypeForPotentialCustomSupertype(Element element, string givenSupertype)
       {
-          foreach (var tableTyping in GetTypingTablesForElementTable(element.table))
+          foreach (var tableTyping in GetTypingTablesForElementTable(element.category))
               if (givenSupertype == tableTyping.GetPotentialCustomSupertype())
                       return tableTyping.GetOriginalSupertype();
           Debug.LogWarning("! Did not find Original Supertype for element: " + element.Name + " and supertype: " + givenSupertype);
@@ -34,7 +34,7 @@ public class WorldParser : ScriptableObject
       
       public string GetOriginalSubtypeForPotentialCustomSubtype(Element element, string givenSubtype)
       {
-          foreach (var tableTyping in GetTypingTablesForElementTable(element.table))
+          foreach (var tableTyping in GetTypingTablesForElementTable(element.category))
               if (tableTyping.GetPotentiallyCustomSubtypes().Contains(givenSubtype))
               {
                   int index = tableTyping.GetPotentiallyCustomSubtypes().IndexOf(givenSubtype);
@@ -46,7 +46,7 @@ public class WorldParser : ScriptableObject
       
       public string GetPotentialCustomSupertypeForElement(Element element)
       {
-          foreach (var tableTyping in  GetTypingTablesForElementTable(element.table))
+          foreach (var tableTyping in  GetTypingTablesForElementTable(element.category))
               if (element.Supertype == tableTyping.Supertype)
                   return tableTyping.GetPotentialCustomSupertype();
           Debug.LogWarning("! Did not find Effective Supertype for element: " + element.Name + " With supertype: " + element.Supertype);
@@ -54,26 +54,30 @@ public class WorldParser : ScriptableObject
       }    
       public string GetPotentialCustomSubtypeForElement(Element element)
       {
-          foreach (var tableTyping in  GetTypingTablesForElementTable(element.table))
+          foreach (var tableTyping in  GetTypingTablesForElementTable(element.category))
               if (element.Supertype == tableTyping.Supertype)
                   return tableTyping.GetPotentialCustomSubtype(element.Subtype);
           Debug.LogWarning("! Did not find Effective Supertype for element: " + element.Name + " With supertype: " + element.Supertype);
           return "";
       }
       
-      public List<TableTyping> GetTypingTablesForElementTable(Element.Table table)
+      public List<TableTyping> GetTypingTablesForElementTable(Element.Category category)
       {
-          if (table == Element.Table.Location)
-              return RootControl.World.TypesLocation;
-          //todo add rest 
+          List<TableTyping> returnList = new List<TableTyping>();
 
-        Debug.LogWarning("! Failed to find Typing Table for: " + table);
-          return null;
+          TableTyping noneType = new TableTyping("None"); 
+          returnList.Add(noneType);
+          if (category == Element.Category.Character)
+              returnList.AddRange( RootControl.World.TypesCharacter); 
+          if (category == Element.Category.Location)
+              returnList.AddRange(  RootControl.World.TypesLocation);
+           
+          return returnList;
       }
 
       public TableTyping GetTypingTableForElement(Element element)
       {
-          List<TableTyping> potentialTypingTables = GetTypingTablesForElementTable(element.table);
+          List<TableTyping> potentialTypingTables = GetTypingTablesForElementTable(element.category);
           foreach (var potentialTypingTable in potentialTypingTables)
               if (potentialTypingTable.GetOriginalSupertype() == element.Supertype)
                   return potentialTypingTable;
@@ -138,31 +142,33 @@ public class WorldParser : ScriptableObject
         World world = new World
         {
             Name = worldName,
-            Characters = dbReader.GetAllElementsOfType<Character>(Element.Table.Character),
-            Forces = dbReader.GetAllElementsOfType<Force>(Element.Table.Force),
-            Events = dbReader.GetAllElementsOfType<Event>(Element.Table.Event),
-            Relations = dbReader.GetAllElementsOfType<Relation>(Element.Table.Relation),
-            Collectives = dbReader.GetAllElementsOfType<Collective>(Element.Table.Collective),
-            Concepts = dbReader.GetAllElementsOfType<Concept>(Element.Table.Concept),
-            Creatures = dbReader.GetAllElementsOfType<Creature>(Element.Table.Creature),
-            Locations = dbReader.GetAllElementsOfType<Location>(Element.Table.Location),
-            Objects = dbReader.GetAllElementsOfType<Object>(Element.Table.Object),
-            Institutions = dbReader.GetAllElementsOfType<Institution>(Element.Table.Institution),
-            Territorys = dbReader.GetAllElementsOfType<Territory>(Element.Table.Territory),
-            Titles = dbReader.GetAllElementsOfType<Title>(Element.Table.Title),
-            Races = dbReader.GetAllElementsOfType<Race>(Element.Table.Race),
-            Familys = dbReader.GetAllElementsOfType<Family>(Element.Table.Family),
-            Traits = dbReader.GetAllElementsOfType<Family>(Element.Table.Trait),
-            Laws = dbReader.GetAllElementsOfType<Law>(Element.Table.Law),
-            Languages = dbReader.GetAllElementsOfType<Language>(Element.Table.Language),
-            Abilitys = dbReader.GetAllElementsOfType<Ability>(Element.Table.Ability),
+            Characters = dbReader.GetAllElementsOfType<Character>(Element.Category.Character),
+            Forces = dbReader.GetAllElementsOfType<Force>(Element.Category.Force),
+            Events = dbReader.GetAllElementsOfType<Event>(Element.Category.Event),
+            Relations = dbReader.GetAllElementsOfType<Relation>(Element.Category.Relation),
+            Collectives = dbReader.GetAllElementsOfType<Collective>(Element.Category.Collective),
+            Concepts = dbReader.GetAllElementsOfType<Construct>(Element.Category.Construct),
+            Creatures = dbReader.GetAllElementsOfType<Creature>(Element.Category.Creature),
+            Locations = dbReader.GetAllElementsOfType<Location>(Element.Category.Location),
+            Objects = dbReader.GetAllElementsOfType<Object>(Element.Category.Object),
+            Institutions = dbReader.GetAllElementsOfType<Institution>(Element.Category.Institution),
+            Territorys = dbReader.GetAllElementsOfType<Territory>(Element.Category.Territory),
+            Titles = dbReader.GetAllElementsOfType<Title>(Element.Category.Title),
+            Races = dbReader.GetAllElementsOfType<Species>(Element.Category.Species),
+            Familys = dbReader.GetAllElementsOfType<Family>(Element.Category.Family),
+            Traits = dbReader.GetAllElementsOfType<Family>(Element.Category.Trait),
+            Laws = dbReader.GetAllElementsOfType<Law>(Element.Category.Law),
+            Languages = dbReader.GetAllElementsOfType<Language>(Element.Category.Language),
+            Abilitys = dbReader.GetAllElementsOfType<Ability>(Element.Category.Ability),
             Maps = dbReader.GetAllMaps(),
             Pins = dbReader.GetAllPins(),
-            TypesLocation = dbReader.GetTableTyping("Location"),
+            TypesLocation = dbReader.GetTableTyping(Element.Category.Location.ToString()),
+            TypesCharacter = dbReader.GetTableTyping(Element.Category.Character.ToString()),
+          //  CreatureTypes = dbReader.GetTableTyping("Creature"),
           //  CreatureTypes = dbReader.GetTableTyping("Creature"),
         };
         Debug.Log("Parsed world: " + worldName + " with " + world.Pins.Count + " Pins");
-        Debug.Log("TypesLocation has subtypescount: " +  world.TypesLocation[0].Subtypes.Count);
+        Debug.Log("TypesCharacter has subtypescount: " +  world.TypesCharacter[0].Subtypes.Count);
    
         return world;
     }
@@ -174,7 +180,7 @@ public class WorldParser : ScriptableObject
 
           // Create a backup 
            dbWriter.CopyActiveToTempTable();
-           List<Element.Table> typeTables = new List<Element.Table>(); 
+           List<Element.Category> typeTables = new List<Element.Category>(); 
         // Iterate over all properties
         foreach (var prop in world.GetType().GetProperties())
         { 
@@ -184,8 +190,8 @@ public class WorldParser : ScriptableObject
 
             if (propName.StartsWith("Types")) // Typing table
             { 
-                Element.Table table = (Element.Table)Enum.Parse(typeof(Element.Table), propName.Substring(5, propName.Length - 5));
-                typeTables.Add( table); 
+                Element.Category category = (Element.Category)Enum.Parse(typeof(Element.Category), propName.Substring(5, propName.Length - 5));
+                typeTables.Add( category); 
             }
             else // Standard table
             {
@@ -195,10 +201,10 @@ public class WorldParser : ScriptableObject
                 // Get the list of elements from the property
                 var elements = (IList)prop.GetValue(world); 
  
-                Element.Table tableTable;
-                Enum.TryParse<Element.Table>(propName, out tableTable); 
+                Element.Category categoryCategory;
+                Enum.TryParse<Element.Category>(propName, out categoryCategory); 
   
-                dbWriter.FlushTable(tableTable);
+                dbWriter.FlushTable(categoryCategory);
 
                 foreach (Element element in elements)
                     dbWriter.WriteElement(element);
@@ -252,4 +258,76 @@ public class WorldParser : ScriptableObject
         return rootControl;
     }
 
+}
+
+public class TableTyping
+{
+    public string Supertype { get; private set; }
+    public string TypeCustom { get; set; }
+    public List<string> Subtypes { get; private set; }  
+    public List<string> SubtypeCustoms { get; set; }
+
+    public TableTyping( )
+    {
+       
+    }
+    public TableTyping(string supertypeName)
+    {
+        Supertype = supertypeName;
+        Subtypes = new List<string>();
+        SubtypeCustoms = new List<string>();
+    }
+
+    public void SetSupertype(string str)
+    {
+        Supertype = str;
+    }
+    public void SetSubtype(List<string> strs)
+    { 
+        Subtypes = strs;
+    }
+    public string GetOriginalSupertype()
+    { 
+        return Supertype;
+    }
+    public string GetPotentialCustomSupertype()
+    {
+        if (string.IsNullOrEmpty(TypeCustom) == false)
+            return TypeCustom;
+        return Supertype;
+    }  
+    public string GetPotentialCustomSubtype(string originalSubtypeName)
+    {
+        int index = 99;
+        foreach (var subtype in Subtypes)
+            if (subtype == originalSubtypeName)
+            {
+                index = Subtypes.IndexOf(subtype);
+            }
+
+        if (index == 99)
+        {
+            //  Debug.LogWarning("!Did not find GetPotentialCustomSubtype for supertype " + Supertype + " argument: " + originalSubtypeName );
+            return "";
+        }
+        if (SubtypeCustoms[index] != "")
+            return SubtypeCustoms[index];
+        return Subtypes[index]; 
+    }
+    public List<string> GetOriginalSubtypes()
+    {
+        return Subtypes;
+    }
+    public List<string> GetPotentiallyCustomSubtypes()
+    {
+        List<string> returnList = new List<string>();
+        foreach (var subtype in Subtypes)
+        {
+            if ( string.IsNullOrEmpty( SubtypeCustoms[Subtypes.IndexOf(subtype)]) == false)
+                returnList.Add(SubtypeCustoms[Subtypes.IndexOf(subtype)]);
+            else
+                returnList.Add(subtype);
+        }
+        return returnList;
+    }
 }

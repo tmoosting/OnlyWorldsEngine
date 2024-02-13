@@ -20,26 +20,26 @@ using System;
         private string dbSourcePath;
         private string dbBackupPath;
 
-        private Dictionary<Element.Table, string> tableNames = new Dictionary<Element.Table, string>
+        private Dictionary<Element.Category, string> tableNames = new Dictionary<Element.Category, string>
         {
-            { Element.Table.Location, "Location" },
-            { Element.Table.Character, "Character" },
-            { Element.Table.Object, "Object" },
-            { Element.Table.Creature, "Creature" },
-            { Element.Table.Concept, "Concept" },
-            { Element.Table.Force, "God" },
-            { Element.Table.Event, "Event" },
-            { Element.Table.Relation, "Relation" },
-            { Element.Table.Collective, "Collective" },
-            { Element.Table.Territory, "Territory" },
-            { Element.Table.Title, "Title" },
-            { Element.Table.Institution, "Institution" },
-            { Element.Table.Race, "Race" },
-            { Element.Table.Family, "Family" },
-            { Element.Table.Trait, "Trait" },
-            { Element.Table.Law, "Law" },
-            { Element.Table.Language, "Language" },
-            { Element.Table.Ability, "Ability" }, 
+            { Element.Category.Location, "Location" },
+            { Element.Category.Character, "Character" },
+            { Element.Category.Object, "Object" },
+            { Element.Category.Creature, "Creature" },
+            { Element.Category.Construct, "Concept" },
+            { Element.Category.Force, "God" },
+            { Element.Category.Event, "Event" },
+            { Element.Category.Relation, "Relation" },
+            { Element.Category.Collective, "Collective" },
+            { Element.Category.Territory, "Territory" },
+            { Element.Category.Title, "Title" },
+            { Element.Category.Institution, "Institution" },
+            { Element.Category.Species, "Race" },
+            { Element.Category.Family, "Family" },
+            { Element.Category.Trait, "Trait" },
+            { Element.Category.Law, "Law" },
+            { Element.Category.Language, "Language" },
+            { Element.Category.Ability, "Ability" }, 
         };
         
         
@@ -95,9 +95,9 @@ using System;
             connection.Open();
 
             string tableName;
-            if (!tableNames.TryGetValue(element.table, out tableName))
+            if (!tableNames.TryGetValue(element.category, out tableName))
             {
-                Debug.LogError("Invalid Element.Type: " + element.table);
+                Debug.LogError("Invalid Element.Type: " + element.category);
                 return;
             }
 
@@ -147,20 +147,20 @@ using System;
         }
     }
     
-    public void WriteTypingTable(Element.Table table)
+    public void WriteTypingTable(Element.Category category)
     { 
         using (SqliteConnection connection = new SqliteConnection(dbActivePath))
         {
             connection.Open();
-            string tableName = table + "Typing";
+            string tableName = category + "Typing";
 
-            List<TableTyping> typingData = RootControl.WorldParser.GetTypingTablesForElementTable(table);
+            List<TableTyping> typingData = RootControl.WorldParser.GetTypingTablesForElementTable(category);
 
             foreach (var tblType in typingData)
             {
                 // Prepare data for insert query
-                List<string> columnsList = new List<string> { "Types", "TypesCustom", "Subtypes", "SubtypesCustom" };
-                List<string> parametersList = new List<string> { "@Types", "@TypesCustom", "@Subtypes", "@SubtypesCustom" };
+                List<string> columnsList = new List<string> { "types", "types_custom", "subtypes", "subtypes_custom" };
+                List<string> parametersList = new List<string> { "@types", "@types_custom", "@subtypes", "@subtypes_custom" };
                 /*if (tblType.Subtypes != null)
                     if (tblType.Subtypes.Count > 0)
                         if (tblType.Subtypes[0] != null)
@@ -171,10 +171,10 @@ using System;
                       Debug.Log("CUSTOMsubtype" + tblType.SubtypeCustoms[0]);*/
                 var values = new Dictionary<string, object>
                 {
-                    { "@Types", tblType.Supertype },
-                    { "@TypesCustom", tblType.TypeCustom },
-                    { "@Subtypes", string.Join(",", tblType.Subtypes) },
-                    { "@SubtypesCustom", string.Join(",", tblType.SubtypeCustoms) }
+                    { "@types", tblType.Supertype },
+                    { "@types_custom", tblType.TypeCustom },
+                    { "@subtypes", string.Join(",", tblType.Subtypes) },
+                    { "@subtypes_custom", string.Join(",", tblType.SubtypeCustoms) }
                 };
 
                 string columns = string.Join(", ", columnsList);
@@ -320,7 +320,7 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
                         value = (bool)value ? 1 : 0;
 
                     // Check for empty string in ParentMap or PinnedMap and replace with null
-                    if ((prop.Name == "ParentMap" || prop.Name == "PinnedMap") && string.IsNullOrEmpty(value as string))
+                    if ((prop.Name == "parent_map" || prop.Name == "pinned_map") && string.IsNullOrEmpty(value as string))
                         value = null;
 
                     values.Add("@" + prop.Name, value);
@@ -335,9 +335,9 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
             connection.Close();
         }
     }
-    public void FlushTable(Element.Table table)
+    public void FlushTable(Element.Category category)
     { 
-        ExecuteQuery("DELETE FROM " + table);
+        ExecuteQuery("DELETE FROM " + category);
     }
     public void FlushTable(string table)
     { 

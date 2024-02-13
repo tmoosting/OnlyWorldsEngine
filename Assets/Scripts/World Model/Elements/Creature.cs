@@ -5,7 +5,7 @@ namespace World_Model.Elements
 
         public Creature()
         {
-            this.table = Element.Table.Creature;
+            this.category = Element.Category.Creature;
         }
 
     }

@@ -137,7 +137,7 @@ public class TimelineWindow : EditorWindow
         RootTimeline.UpdateTimelineData();
         BuildWindow();
     }
-    private void RefreshTable(Element.Table newTable)
+    private void RefreshTable(Element.Category newCategory)
     { 
 
     }

@@ -121,59 +121,59 @@ public class RootEdit : ScriptableObject
     
     
     
-    public Element CreateElement(Element.Table elementTable, string elementName)
+    public Element CreateElement(Element.Category elementCategory, string elementName)
     {
         Element returnElement;
 
-        switch (elementTable)
+        switch (elementCategory)
         {
-            case Element.Table.Location:
+            case Element.Category.Location:
                 returnElement = CreateLocation(elementName);
                 break;
-            case Element.Table.Character:
+            case Element.Category.Character:
                 returnElement = CreateCharacter(elementName);
                 break;
-            case Element.Table.Object:
+            case Element.Category.Object:
                 returnElement = CreateObject(elementName);
                 break;
-            case Element.Table.Creature:
+            case Element.Category.Creature:
                 returnElement = CreateCreature(elementName);
                 break;
-            case Element.Table.Concept:
+            case Element.Category.Construct:
                 returnElement = CreateConcept(elementName);
                 break;
-            case Element.Table.Force:
+            case Element.Category.Force:
                 returnElement = CreateForce(elementName);
                 break;
-            case Element.Table.Event:
+            case Element.Category.Event:
                 returnElement = CreateEvent(elementName);
                 break;
-            case Element.Table.Relation:
+            case Element.Category.Relation:
                 returnElement = CreateRelation(elementName);
                 break;
-            case Element.Table.Collective:
+            case Element.Category.Collective:
                 returnElement = CreateCollective(elementName);
                 break;
-            case Element.Table.Territory:
+            case Element.Category.Territory:
                 returnElement = CreateTerritory(elementName);
                 break;
-            case Element.Table.Title:
+            case Element.Category.Title:
                 returnElement = CreateTitle(elementName);
                 break;
-            case Element.Table.Institution:
+            case Element.Category.Institution:
                 returnElement = CreateInstitution(elementName);
                 break;
-            case Element.Table.Race:
+            case Element.Category.Species:
                 returnElement = CreateRace(elementName);
                 break;
-            case Element.Table.Family:
+            case Element.Category.Family:
                 returnElement = CreateFamily(elementName);
                 break;
-            case Element.Table.Ability:
+            case Element.Category.Ability:
                 returnElement = CreateAbility(elementName);
                 break;
             default:
-                throw new ArgumentException($"Unsupported element table: {elementTable}");
+                throw new ArgumentException($"Unsupported element table: {elementCategory}");
         }
         returnElement.ID = Guid.NewGuid().ToString();
         returnElement.Name = elementName;  
@@ -196,7 +196,12 @@ public class RootEdit : ScriptableObject
 
     private Character CreateCharacter(string elementName)
     {
-        Character character = new Character(); 
+        Character character = new Character()
+        {
+            Supertype = RootControl.World.TypesCharacter[0].GetOriginalSupertype(),
+            Subtype = RootControl.World.TypesCharacter[0].GetOriginalSubtypes()[0], 
+        }; 
+  
         RootControl.World.Characters.Add(character);
         return character;
     }
@@ -215,11 +220,11 @@ public class RootEdit : ScriptableObject
     return creature;
 }
 
-private Concept CreateConcept(string elementName)
+private Construct CreateConcept(string elementName)
 {
-    Concept concept = new Concept(); 
-    RootControl.World.Concepts.Add(concept);
-    return concept;
+    Construct construct = new Construct(); 
+    RootControl.World.Concepts.Add(construct);
+    return construct;
 }
 
 private Force CreateForce(string elementName)
@@ -271,11 +276,11 @@ private Institution CreateInstitution(string elementName)
     return institution;
 }
 
-private Race CreateRace(string elementName)
+private Species CreateRace(string elementName)
 {
-    Race race = new Race(); 
-    RootControl.World.Races.Add(race);
-    return race;
+    Species species = new Species(); 
+    RootControl.World.Races.Add(species);
+    return species;
 }
 
 private Family CreateFamily(string elementName)

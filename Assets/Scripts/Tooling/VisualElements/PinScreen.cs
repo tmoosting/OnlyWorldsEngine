@@ -218,13 +218,13 @@ public class PinScreen : VisualElement
         adaptiveContent.Add(nameFrontLabel);
 
         var elementLabel = new Label(element.Name);
-        FrontLabel elementFrontLabel = new FrontLabel(RootControl, false,element.table.ToString(), elementLabel);
+        FrontLabel elementFrontLabel = new FrontLabel(RootControl, false,element.category.ToString(), elementLabel);
         elementFrontLabel.style.marginBottom = 5f;
         elementFrontLabel.style.marginLeft = 1f;
         
         adaptiveContent.Add(elementFrontLabel);
 
-        if (element.table == Element.Table.Location)
+        if (element.category == Element.Category.Location)
         {
             Location loc = element as Location;
 

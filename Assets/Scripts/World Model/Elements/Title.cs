@@ -5,7 +5,7 @@ namespace World_Model.Elements
 
         public Title()
         {
-            this.table = Element.Table.Title;
+            this.category = Element.Category.Title;
         }
 
     }
