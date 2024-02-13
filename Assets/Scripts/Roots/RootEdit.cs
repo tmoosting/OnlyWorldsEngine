@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using World_Model;
+using World_Model.Elements;
+using Event = World_Model.Elements.Event;
+using Object = World_Model.Elements.Object;
 
 [CreateAssetMenu(fileName = "RootEdit", menuName = "ScriptableObjects/RootEdit", order = 0)]
 
@@ -129,8 +133,8 @@ public class RootEdit : ScriptableObject
             case Element.Table.Character:
                 returnElement = CreateCharacter(elementName);
                 break;
-            case Element.Table.Matter:
-                returnElement = CreateMatter(elementName);
+            case Element.Table.Object:
+                returnElement = CreateObject(elementName);
                 break;
             case Element.Table.Creature:
                 returnElement = CreateCreature(elementName);
@@ -138,8 +142,8 @@ public class RootEdit : ScriptableObject
             case Element.Table.Concept:
                 returnElement = CreateConcept(elementName);
                 break;
-            case Element.Table.God:
-                returnElement = CreateGod(elementName);
+            case Element.Table.Force:
+                returnElement = CreateForce(elementName);
                 break;
             case Element.Table.Event:
                 returnElement = CreateEvent(elementName);
@@ -197,11 +201,11 @@ public class RootEdit : ScriptableObject
         return character;
     }
 
-    private Matter CreateMatter(string elementName)
+    private Object CreateObject(string elementName)
     {
-        Matter matter = new Matter(); 
-        RootControl.World.Matters.Add(matter);
-        return matter;
+        Object obj = new Object(); 
+        RootControl.World.Objects.Add(obj);
+        return obj;
     }
     
     private Creature CreateCreature(string elementName)
@@ -218,11 +222,11 @@ private Concept CreateConcept(string elementName)
     return concept;
 }
 
-private God CreateGod(string elementName)
+private Force CreateForce(string elementName)
 {
-    God god = new God(); 
-    RootControl.World.Gods.Add(god);
-    return god;
+    Force force = new Force(); 
+    RootControl.World.Forces.Add(force);
+    return force;
 }
 
 private Event CreateEvent(string elementName)

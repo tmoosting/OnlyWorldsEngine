@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using World_Model.Elements;
+using Event = World_Model.Elements.Event;
+using Object = World_Model.Elements.Object;
 
 // Unity data object that represents a loaded .db world database file
 
@@ -17,14 +20,14 @@ public class World
     
     
     public List<Character> Characters { get; set; }
-    public List<God> Gods { get; set; }
+    public List<Force> Forces { get; set; }
     public List<Event> Events { get; set; }
     public List<Relation> Relations { get; set; }
     public List<Collective> Collectives { get; set; }
     public List<Concept> Concepts { get; set; }
     public List<Creature> Creatures { get; set; }
     public List<Location> Locations { get; set; }
-    public List<Matter> Matters { get; set; }
+    public List<Object> Objects { get; set; }
     public List<Institution> Institutions { get; set; }
     public List<Territory> Territorys { get; set; }
     public List<Title> Titles { get; set; }

@@ -6,6 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using World_Model;
+using Object = World_Model.Elements.Object;
 
 
 // Responsible for map, pin, pinelement:  creation, management, linking
@@ -420,7 +422,7 @@ public class RootMap : ScriptableObject
         Map map = RootControl.Map;
         map.Name = mapName;
         map.type = mapType;
-        map.TypeString = mapType.ToString();
+        map.Supertype = mapType.ToString();
         /*if (mapParent != "" && mapParent != "None")
             map.ParentMap =mapParent;*/
         map.BackgroundColor = ColorToHexString( color);

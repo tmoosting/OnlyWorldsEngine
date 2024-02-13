@@ -6,6 +6,7 @@ using System.Reflection;
 using Mono.Data.Sqlite;
 using UnityEditor;
 using UnityEngine;
+using World_Model;
 
 [CreateAssetMenu(fileName = "DBReader", menuName = "ScriptableObjects/DBReader", order = 0)]
 public class DBReader : ScriptableObject
@@ -22,7 +23,7 @@ public class DBReader : ScriptableObject
         {
             case Element.Table.Character:
                 return "Sentient being, probably humanoid";
-            case Element.Table.God:
+            case Element.Table.Force:
                 return "Does it matter if it's real";
             case Element.Table.Event:
                 return "";
@@ -36,7 +37,7 @@ public class DBReader : ScriptableObject
                 return "";
             case Element.Table.Location:
                 return "";
-            case Element.Table.Matter:
+            case Element.Table.Object:
                 return "";
             case Element.Table.Institution:
                 return "";
@@ -406,18 +407,18 @@ public class DBReader : ScriptableObject
                     {
                         Map map = new Map
                         {
-                            ID = _reader["ID"].ToString(),
-                            Name = _reader["Name"].ToString(), 
-                            TypeString = _reader["TypeString"].ToString(), 
-                            Subtype = _reader["Subtype"].ToString(), 
-                            Description = _reader["Description"].ToString(), 
-                            FileName = _reader["FileName"].ToString(), 
-                            BackgroundColor = _reader["BackgroundColor"].ToString(), 
-                            ParentMap = _reader["ParentMap"].ToString(), 
-                            Hierarchy = Convert.ToInt32(_reader["Hierarchy"]), 
+                            ID = _reader["id"].ToString(),
+                            Name = _reader["name"].ToString(),   
+                            Supertype = _reader["supertype"].ToString(), 
+                            Subtype = _reader["subtype"].ToString(), 
+                            Description = _reader["description"].ToString(), 
+                            FileName = _reader["file_name"].ToString(), 
+                            BackgroundColor = _reader["background_color"].ToString(), 
+                            ParentMap = _reader["parent_map"].ToString(), 
+                            Hierarchy = Convert.ToInt32(_reader["hierarchy"]), 
 
                         };
-                        if (Enum.TryParse(map.TypeString, out Map.Type mapType))
+                        if (Enum.TryParse(map.Supertype, out Map.Type mapType))
                             map.type = mapType;
                         returnList.Add(map);
                     }
@@ -445,21 +446,21 @@ public class DBReader : ScriptableObject
                     {
                         Pin pin = new Pin
                         {
-                            ID = _reader["ID"].ToString(),
-                            Name = _reader["Name"].ToString(), 
-                            Description = _reader["Description"].ToString(), 
-                            Type = _reader["Type"].ToString(), 
-                            Map = _reader["Map"].ToString(), 
-                            PinnedMap = _reader["PinnedMap"].ToString(), 
+                            ID = _reader["id"].ToString(),
+                            Name = _reader["name"].ToString(), 
+                            Description = _reader["description"].ToString(), 
+                            Type = _reader["type"].ToString(), 
+                            Map = _reader["map"].ToString(), 
+                            PinnedMap = _reader["pinne_map"].ToString(), 
                             Element = _reader["Element"].ToString(), 
-                            CoordX = Convert.ToSingle(_reader["CoordX"]),
-                            CoordY = Convert.ToSingle(_reader["CoordY"]),
-                            CoordZ = Convert.ToSingle(_reader["CoordZ"]),
-                            Zoomscale = Convert.ToInt32(_reader["Zoomscale"]),
-                            ToggleBase = ReadSQLiteBool(SafeGetValue(_reader, "ToggleBase"), true), 
-                            ToggleColor = ReadSQLiteBool(SafeGetValue(_reader, "ToggleColor"), true), 
-                            ToggleIcon = ReadSQLiteBool(SafeGetValue(_reader, "ToggleIcon"), true), 
-                            ToggleName = ReadSQLiteBool(SafeGetValue(_reader, "ToggleName"), true),  
+                            CoordX = Convert.ToSingle(_reader["coord_x"]),
+                            CoordY = Convert.ToSingle(_reader["coord_y"]),
+                            CoordZ = Convert.ToSingle(_reader["coord_z"]),
+                            Zoomscale = Convert.ToInt32(_reader["zoom_scale"]),
+                            ToggleBase = ReadSQLiteBool(SafeGetValue(_reader, "toggle_Base"), true), 
+                            ToggleColor = ReadSQLiteBool(SafeGetValue(_reader, "toggle_color"), true), 
+                            ToggleIcon = ReadSQLiteBool(SafeGetValue(_reader, "toggle_icon"), true), 
+                            ToggleName = ReadSQLiteBool(SafeGetValue(_reader, "toggle_name"), true),  
                         };
                         pin.category = (Pin.Category)Enum.Parse(typeof(Pin.Category), pin.Type);
                         returnList.Add(pin);

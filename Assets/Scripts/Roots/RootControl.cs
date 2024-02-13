@@ -9,7 +9,9 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
+using World_Model;
+using Object = World_Model.Elements.Object;
+
  
 
 
@@ -421,8 +423,8 @@ public class RootControl : ScriptableObject
         {
             case Element.Table.Character:
                 return World.Characters.Cast<Element>().ToList();
-            case Element.Table.God:
-                return World.Gods.Cast<Element>().ToList();
+            case Element.Table.Force:
+                return World.Forces.Cast<Element>().ToList();
             case Element.Table.Event:
                 return World.Events.Cast<Element>().ToList();
             case Element.Table.Relation:
@@ -435,8 +437,8 @@ public class RootControl : ScriptableObject
                 return World.Creatures.Cast<Element>().ToList();
             case Element.Table.Location:
                 return World.Locations.Cast<Element>().ToList();
-            case Element.Table.Matter:
-                return World.Matters.Cast<Element>().ToList();
+            case Element.Table.Object:
+                return World.Objects.Cast<Element>().ToList();
             case Element.Table.Institution:
                 return World.Institutions.Cast<Element>().ToList();
             case Element.Table.Territory:
@@ -489,7 +491,7 @@ public class RootControl : ScriptableObject
     private void VerifyEnvironment()
     {
         // Check for correct scene existing and loaded first
-        var asset = AssetDatabase.LoadAssetAtPath<Object>("Assets/Scenes/OnlyWorlds.unity");
+        var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets/Scenes/OnlyWorlds.unity");
 
         if (asset == null)
         {
@@ -557,7 +559,7 @@ public class RootControl : ScriptableObject
         string str = "";  
         string actualPath = MonoLoader.projectPath + filePath; 
         
-        var asset = AssetDatabase.LoadAssetAtPath<Object>(actualPath);
+        var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(actualPath);
 
         if (asset == null)  
         { 

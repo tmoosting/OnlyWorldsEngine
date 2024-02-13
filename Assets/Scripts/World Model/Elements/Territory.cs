@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Territory : Element
+namespace World_Model.Elements
 {
-
-    public Territory()
+    public class Territory : Element
     {
-        this.table = Element.Table.Territory;
-    }
 
+        public Territory()
+        {
+            this.table = Element.Table.Territory;
+        }
+
+    }
 }

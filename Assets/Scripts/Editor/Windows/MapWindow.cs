@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World_Model;
 
 // Controls
 // left click to select pin, or (on empty) create temp pin (and deselect any pin)

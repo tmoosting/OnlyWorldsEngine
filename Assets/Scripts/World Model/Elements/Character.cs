@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Character : Element
+namespace World_Model.Elements
 {
-
-  public int Age { get; set; }
-  public int Charisma { get; set; }
-  public string Traits { get; set; }
-
-  public Character()
+  public class Character : Element
   {
-    this.table = Element.Table.Character;
-  }
 
+    public int Age { get; set; }
+    public int Charisma { get; set; }
+    public string Traits { get; set; }
+
+    public Character()
+    {
+      this.table = Element.Table.Character;
+    }
+
+  }
 }

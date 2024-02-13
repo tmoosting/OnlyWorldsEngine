@@ -5,6 +5,10 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using World_Model;
+using World_Model.Elements;
+using Event = World_Model.Elements.Event;
+using Object = World_Model.Elements.Object;
 
 // Checks World files in assets. Loads, validates, initializes them
 // Could maybe rename to: WorldParser? 
@@ -135,14 +139,14 @@ public class WorldParser : ScriptableObject
         {
             Name = worldName,
             Characters = dbReader.GetAllElementsOfType<Character>(Element.Table.Character),
-            Gods = dbReader.GetAllElementsOfType<God>(Element.Table.God),
+            Forces = dbReader.GetAllElementsOfType<Force>(Element.Table.Force),
             Events = dbReader.GetAllElementsOfType<Event>(Element.Table.Event),
             Relations = dbReader.GetAllElementsOfType<Relation>(Element.Table.Relation),
             Collectives = dbReader.GetAllElementsOfType<Collective>(Element.Table.Collective),
             Concepts = dbReader.GetAllElementsOfType<Concept>(Element.Table.Concept),
             Creatures = dbReader.GetAllElementsOfType<Creature>(Element.Table.Creature),
             Locations = dbReader.GetAllElementsOfType<Location>(Element.Table.Location),
-            Matters = dbReader.GetAllElementsOfType<Matter>(Element.Table.Matter),
+            Objects = dbReader.GetAllElementsOfType<Object>(Element.Table.Object),
             Institutions = dbReader.GetAllElementsOfType<Institution>(Element.Table.Institution),
             Territorys = dbReader.GetAllElementsOfType<Territory>(Element.Table.Territory),
             Titles = dbReader.GetAllElementsOfType<Title>(Element.Table.Title),

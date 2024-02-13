@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World_Model;
+using World_Model.Elements;
+using Object = World_Model.Elements.Object;
 
 // pin window content for when an existing pin is selected
 
@@ -432,7 +435,7 @@ public class PinScreen : VisualElement
         get
         {
             if (_monoLoader == null)
-                _monoLoader = Object.FindObjectOfType<MonoLoader>(true);
+                _monoLoader = UnityEngine.Object.FindObjectOfType<MonoLoader>(true);
             if (_monoLoader == null)
                 Debug.LogWarning("! No MonoLoader GameObject found. Please re-load the tool from Launcher.");
             return _monoLoader;

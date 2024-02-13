@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Family : Element
+namespace World_Model.Elements
 {
-    public Family()
+    public class Family : Element
     {
-        this.table = Element.Table.Family;
+        public Family()
+        {
+            this.table = Element.Table.Family;
+        }
     }
 }

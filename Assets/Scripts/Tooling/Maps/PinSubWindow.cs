@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World_Model;
 using Object = UnityEngine.Object;
 
 public class PinSubWindow : VisualElement

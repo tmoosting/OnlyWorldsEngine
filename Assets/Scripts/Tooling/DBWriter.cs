@@ -7,6 +7,7 @@ using System;
     using System.IO;
     using System.Linq;
     using UnityEditor;
+    using World_Model;
 
     [AttributeUsage(AttributeTargets.Property)]
     public class SQLiteBoolAttribute : Attribute { }
@@ -23,10 +24,10 @@ using System;
         {
             { Element.Table.Location, "Location" },
             { Element.Table.Character, "Character" },
-            { Element.Table.Matter, "Object" },
+            { Element.Table.Object, "Object" },
             { Element.Table.Creature, "Creature" },
             { Element.Table.Concept, "Concept" },
-            { Element.Table.God, "God" },
+            { Element.Table.Force, "God" },
             { Element.Table.Event, "Event" },
             { Element.Table.Relation, "Relation" },
             { Element.Table.Collective, "Collective" },

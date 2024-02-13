@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Relation  : Element
+namespace World_Model.Elements
 {
-
-    public Relation()
+    public class Relation  : Element
     {
-        this.table = Element.Table.Relation;
+
+        public Relation()
+        {
+            this.table = Element.Table.Relation;
+        }
+
+
     }
-
-
 }

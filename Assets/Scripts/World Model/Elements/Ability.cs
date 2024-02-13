@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Ability : Element
+namespace World_Model.Elements
 {
-    
-    public int IsMagic { get; set; }
-    
-    public Ability()
+    public class Ability : Element
     {
-        this.table = Element.Table.Ability;
+    
+        public int IsMagic { get; set; }
+    
+        public Ability()
+        {
+            this.table = Element.Table.Ability;
+        }
     }
 }

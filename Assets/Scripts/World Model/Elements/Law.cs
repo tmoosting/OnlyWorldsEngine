@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Law : Element
+namespace World_Model.Elements
 {
-    public Law()
+    public class Law : Element
     {
-        this.table = Element.Table.Law;
+        public Law()
+        {
+            this.table = Element.Table.Law;
+        }
     }
 }

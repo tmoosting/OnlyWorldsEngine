@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Race  : Element
+namespace World_Model.Elements
 {
-
-    public Race()
+    public class Race  : Element
     {
-        this.table = Element.Table.Race;
-    }
 
+        public Race()
+        {
+            this.table = Element.Table.Race;
+        }
+
+    }
 }
