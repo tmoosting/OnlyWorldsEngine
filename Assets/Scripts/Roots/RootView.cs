@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "RootView", menuName = "ScriptableObjects/RootView", order = 0)]
 
-public class RootView : ScriptableObject
+public class  RootView : ScriptableObject
 {
 
     [Header("General")]

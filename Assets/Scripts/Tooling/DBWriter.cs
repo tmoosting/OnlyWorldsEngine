@@ -19,6 +19,7 @@ using System;
         private string dbActivePath;
         private string dbSourcePath;
         private string dbBackupPath;
+        private string dbFetchPath;
 
         private Dictionary<Element.Category, string> tableNames = new Dictionary<Element.Category, string>
         {

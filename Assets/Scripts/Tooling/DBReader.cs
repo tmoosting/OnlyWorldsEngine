@@ -15,7 +15,7 @@ public class DBReader : ScriptableObject
     private IDbCommand _dbcmd;
     private IDataReader _reader;
     private  string dbActivePath = "URI=file:" + Application.dataPath + "/DefaultWorld.db";
-
+    
 
     public string GetElementMetaDescription(Element.Category category) // todo fill this
     { 

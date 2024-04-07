@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
         <ui:VisualElement name="WorldLoading" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 3px;">
-            <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdownFieldWorlds" style="margin-top: 5px; font-size: 14px; margin-left: 0; height: 26px;" />
+            <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdownFieldWorlds" style="margin-top: 5px; font-size: 14px; margin-left: 0; height: 26px; width: 88%; justify-content: center; align-self: center;" />
             <ui:Label tabindex="-1" text="World Name" display-tooltip-when-elided="true" name="labelWorldHeader" style="-unity-font-style: bold; font-size: 14px; margin-top: 11px; display: none;" />
             <ui:Label tabindex="-1" text="World Content" display-tooltip-when-elided="true" name="labelWorldContent" style="font-size: 14px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; display: none;" />
-            <ui:Button text="Load World" display-tooltip-when-elided="true" name="buttonLoadWorld" style="margin-top: 5px; margin-left: 22px; margin-right: 22px; height: 45px;" />
+            <ui:Button text="Load World" display-tooltip-when-elided="true" name="buttonLoadWorld" style="margin-top: 5px; margin-left: 22px; margin-right: 22px; height: auto;" />
             <ui:Button text="Load Layout &amp; World" display-tooltip-when-elided="true" name="buttonLoadLayout" style="margin-top: 2px; margin-left: 22px; margin-right: 22px; display: flex;" />
             <ui:Button text="Save World" display-tooltip-when-elided="true" name="buttonSaveWorld" style="margin-top: 2px; margin-left: 22px; margin-right: 22px;" />
         </ui:VisualElement>

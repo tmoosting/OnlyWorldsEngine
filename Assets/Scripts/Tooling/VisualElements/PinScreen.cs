@@ -312,7 +312,7 @@ public class PinScreen : VisualElement
         nameFrontLabel.style.marginLeft = 1f;
         adaptiveContent.Add(nameFrontLabel);
         
-        SquareDropdown mapDropdown = new SquareDropdown(RootControl, "maDropdown", OnPinnedMapDropdownChange);
+        SquareDropdown mapDropdown = new SquareDropdown(RootControl, "mapDropdown", OnPinnedMapDropdownChange);
         FrontLabel dropdownFrontLabel = new FrontLabel(RootControl, true,"Pinned Map", mapDropdown);
         dropdownFrontLabel.style.marginBottom = 3f;
         dropdownFrontLabel.style.marginLeft = 1f;
