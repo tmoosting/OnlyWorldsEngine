@@ -142,8 +142,8 @@ public class RootEdit : ScriptableObject
             case Element.Category.Construct:
                 returnElement = CreateConcept(elementName);
                 break;
-            case Element.Category.Force:
-                returnElement = CreateForce(elementName);
+            case Element.Category.Phenomenon:
+                returnElement = CreatePhenomenon(elementName);
                 break;
             case Element.Category.Event:
                 returnElement = CreateEvent(elementName);
@@ -227,11 +227,11 @@ private Construct CreateConcept(string elementName)
     return construct;
 }
 
-private Force CreateForce(string elementName)
+private Phenomenon CreatePhenomenon(string elementName)
 {
-    Force force = new Force(); 
-    RootControl.World.ForceList.Add(force);
-    return force;
+    Phenomenon phenomenon = new Phenomenon(); 
+    RootControl.World.PhenomenonList.Add(phenomenon);
+    return phenomenon;
 }
 
 private Event CreateEvent(string elementName)

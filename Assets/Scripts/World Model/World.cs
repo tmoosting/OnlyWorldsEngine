@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 using UnityEngine;
 using World_Model.Elements;
 using Event = World_Model.Elements.Event;
@@ -14,13 +15,21 @@ using Object = World_Model.Elements.Object;
 
 public class World
 {
+    [JsonProperty("Character")]
+    public List<Character> Characters { get; set; }
+
+    [JsonProperty("Location")]
+    public List<Location> Locations { get; set; }
+    
+    
+    
     public string ID = "DefaultID";
 
     public string Name;
     
     
     public List<Character> CharacterList { get; set; }
-    public List<Force> ForceList { get; set; }
+    public List<Phenomenon> PhenomenonList { get; set; }
     public List<Event> EventList { get; set; }
     public List<Relation> RelationList { get; set; }
     public List<Collective> CollectiveList { get; set; }

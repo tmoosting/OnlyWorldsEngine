@@ -3,12 +3,13 @@
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
+    
 using System;
     using System.IO;
     using System.Linq;
+    using Newtonsoft.Json;
     using UnityEditor;
-    using World_Model;
-
+    using World_Model; 
     [AttributeUsage(AttributeTargets.Property)]
     public class SQLiteBoolAttribute : Attribute { }
     
@@ -18,8 +19,7 @@ using System;
     {
         private string dbActivePath;
         private string dbSourcePath;
-        private string dbBackupPath;
-        private string dbFetchPath;
+        private string dbBackupPath; 
 
         private Dictionary<Element.Category, string> tableNames = new Dictionary<Element.Category, string>
         {
@@ -28,7 +28,7 @@ using System;
             { Element.Category.Object, "Object" },
             { Element.Category.Creature, "Creature" },
             { Element.Category.Construct, "Concept" },
-            { Element.Category.Force, "God" },
+            { Element.Category.Phenomenon, "God" },
             { Element.Category.Event, "Event" },
             { Element.Category.Relation, "Relation" },
             { Element.Category.Collective, "Collective" },
@@ -48,7 +48,7 @@ using System;
     public void SetDatabasePath(string worldName)
     {
         dbActivePath = "URI=file:" + Application.dataPath + "/" + RootControl.MonoLoader.worldPath + worldName + ".db";  
-        dbSourcePath =  Application.dataPath + "/" + RootControl.MonoLoader.worldPath + worldName + ".db";  
+        dbSourcePath =  Application.dataPath + "/" + RootControl.MonoLoader.worldPath + worldName + ".db";    
         dbBackupPath =  Application.dataPath + "/Resources/DatabaseFlushBackup.db";
     }
     
@@ -78,7 +78,9 @@ using System;
                         command.Parameters.Add(new SqliteParameter(parameter.Key, parameter.Value));
                     }
                 }
-              if (query.Substring(0,6) != "DELETE")
+                Debug.Log("queryyyy:" + query); 
+
+       if (query.Substring(0,6) != "DELETE")
                     Debug.Log("query:" + query); 
                 command.ExecuteNonQuery();
             }
@@ -309,6 +311,34 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
         return rootControl;
     }
 
+    public void ImportWorldFromJSON(string json)
+    {
+        // Deserialize the JSON string into the World object
+        World world = JsonConvert.DeserializeObject<World>(json);
+        
+        Debug.Log($"Characters loaded: {world.Characters.Count}");
+        /*Debug.Log("Characreerlist " + world.CharacterList.Count);
+        Debug.Log("loclist " + world.LocationList.Count);*/
+        // Set the database path for writing
+       RootControl.DBWriter.SetDatabasePath("FetchWorld"); // Assuming this sets up for FetchWorld.db correctly
 
+        // Process and store each element list from the World object
+     StoreElements(world.Characters, Element.Category.Character);
+      StoreElements(world.Locations, Element.Category.Location);
+        // Repeat for other element lists...
+
+     //   RootControl.WorldParser.StoreFetchedWorld(world);
+        Debug.Log("World import complete.");
+    }
+
+    private void StoreElements<T>(List<T> elementsList, Element.Category category) where T : Element
+    {
+        if (elementsList == null) return;
+
+        foreach (T element in elementsList)
+        { 
+           RootControl.DBWriter.WriteElement(element);
+        }
+    }
   
     }

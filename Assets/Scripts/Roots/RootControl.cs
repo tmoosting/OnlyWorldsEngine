@@ -423,8 +423,8 @@ public class RootControl : ScriptableObject
         {
             case Element.Category.Character:
                 return World.CharacterList.Cast<Element>().ToList();
-            case Element.Category.Force:
-                return World.ForceList.Cast<Element>().ToList();
+            case Element.Category.Phenomenon:
+                return World.PhenomenonList.Cast<Element>().ToList();
             case Element.Category.Event:
                 return World.EventList.Cast<Element>().ToList();
             case Element.Category.Relation:

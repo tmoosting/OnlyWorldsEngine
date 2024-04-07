@@ -7,6 +7,10 @@
             <ui:Button text="Load World" display-tooltip-when-elided="true" name="buttonLoadWorld" style="margin-top: 5px; margin-left: 22px; margin-right: 22px; height: auto;" />
             <ui:Button text="Load Layout &amp; World" display-tooltip-when-elided="true" name="buttonLoadLayout" style="margin-top: 2px; margin-left: 22px; margin-right: 22px; display: flex;" />
             <ui:Button text="Save World" display-tooltip-when-elided="true" name="buttonSaveWorld" style="margin-top: 2px; margin-left: 22px; margin-right: 22px;" />
+            <ui:VisualElement style="flex-grow: 0; height: 22px;" />
+            <ui:TextField picking-mode="Ignore" value="world key" name="worldKeyTextField" />
+            <ui:Button text="Fetch" parse-escape-sequences="true" display-tooltip-when-elided="true" name="buttonFetch" />
+            <ui:Button text="Send" parse-escape-sequences="true" display-tooltip-when-elided="true" name="buttonSend" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

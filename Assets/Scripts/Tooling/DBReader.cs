@@ -23,7 +23,7 @@ public class DBReader : ScriptableObject
         {
             case Element.Category.Character:
                 return "Sentient being, probably humanoid";
-            case Element.Category.Force:
+            case Element.Category.Phenomenon:
                 return "Does it matter if it's real";
             case Element.Category.Event:
                 return "";

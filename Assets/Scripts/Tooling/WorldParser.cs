@@ -143,7 +143,7 @@ public class WorldParser : ScriptableObject
         {
             Name = worldName,
             CharacterList = dbReader.GetAllElementsOfType<Character>(Element.Category.Character),
-            ForceList = dbReader.GetAllElementsOfType<Force>(Element.Category.Force),
+            PhenomenonList = dbReader.GetAllElementsOfType<Phenomenon>(Element.Category.Phenomenon),
             EventList = dbReader.GetAllElementsOfType<Event>(Element.Category.Event),
             RelationList = dbReader.GetAllElementsOfType<Relation>(Element.Category.Relation),
             CollectiveList = dbReader.GetAllElementsOfType<Collective>(Element.Category.Collective),
@@ -223,7 +223,30 @@ public class WorldParser : ScriptableObject
             dbWriter.WriteNonElement(pin, "Pin"); 
         
     }
-       
+       public void StoreFetchedWorld(World world)
+       { 
+           dbWriter = RootControl.DBWriter;
+
+           // Create a backup 
+           dbWriter.CopyActiveToTempTable();
+           List<Element.Category> typeTables = new List<Element.Category>(); 
+           // Iterate over all properties
+           foreach (var prop in world.GetType().GetProperties())
+           {  
+            
+               var propName = prop.Name;
+ 
+ 
+                   var elements = (IList)prop.GetValue(world); 
+  
+                   foreach (Element element in elements)
+                       dbWriter.WriteElement(element);
+           }
+           
+        
+    
+        
+       }
        /*public void StoreElement(Element element)
        {
        //    Debug.Log("Storing element: " + element.ID);
