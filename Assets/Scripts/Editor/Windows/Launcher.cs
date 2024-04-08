@@ -154,11 +154,11 @@ public class Launcher : EditorWindow
     }
     private void ClickButtonFetch()
     {
-        RootControl.DBWriter.ImportWorldFromJSON(jsonStr);
+        RootControl.APIHandler.FetchWorldWithKey(worldKeyTextField.value);
     }
     private void ClickButtonSend()
     {
-    
+      RootControl.APIHandler.SendDataAsync(worldKeyTextField.value);
      
     }
     private bool AreRootWindowsOpen()

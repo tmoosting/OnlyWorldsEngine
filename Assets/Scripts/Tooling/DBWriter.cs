@@ -313,6 +313,7 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
 
     public void ImportWorldFromJSON(string json)
     {
+        Debug.Log("!!!! ImportWorldFromJSON " + json);
         // Deserialize the JSON string into the World object
         World world = JsonConvert.DeserializeObject<World>(json);
         
@@ -322,6 +323,8 @@ private bool DoesColumnExist(string tableName, string columnName, SqliteConnecti
         // Set the database path for writing
        RootControl.DBWriter.SetDatabasePath("FetchWorld"); // Assuming this sets up for FetchWorld.db correctly
 
+       FlushTable(Element.Category.Character.ToString());
+       FlushTable(Element.Category.Location.ToString());
         // Process and store each element list from the World object
      StoreElements(world.Characters, Element.Category.Character);
       StoreElements(world.Locations, Element.Category.Location);

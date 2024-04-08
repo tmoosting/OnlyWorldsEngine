@@ -605,7 +605,23 @@ public class RootControl : ScriptableObject
             Debug.LogWarning("! No DBReader found. Please re-load the tool from Launcher.");
         return dbReader;
     }
-    
+    private APIHandler _apiHandler;
+    public APIHandler APIHandler
+    {
+        get
+        {
+            if (_apiHandler == null)
+                _apiHandler = LoadAPIHandler();
+            return _apiHandler;
+        }
+    }
+    private APIHandler LoadAPIHandler()
+    {
+        APIHandler apiHandler = AssetDatabase.LoadAssetAtPath<APIHandler>(MonoLoader.projectPath+MonoLoader.rootPath+"APIHandler.asset");
+        if (apiHandler == null)
+            Debug.LogWarning("! No APIHandler found. Please re-load the tool from Launcher.");
+        return apiHandler;
+    }
     private DBWriter _dbWriter;
     public DBWriter DBWriter
     {
