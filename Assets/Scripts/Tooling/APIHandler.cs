@@ -13,27 +13,29 @@ public class APIHandler : ScriptableObject
     
     private const string apiUrl = "https://www.onlyworlds.com/api/worlddata/"; 
     
-    public void FetchWorldWithKey(string apiKey)
+    public async  UniTask FetchWorldWithKey(string apiKey, string worldName)
     {
         if (apiKey.Length != 8)
         {
             Debug.Log("API key is wrong length: " + apiKey.Length  + " Please try again with 8 digits: " + apiKey.Length);
             return;
-        }
-        FetchAndUpdateDataAsync(apiKey);
+        } 
+     await FetchAndUpdateDataAsync(apiKey);
+
+     RootControl.LoadInterfaceAndWorld("FetchWorld");
     }
-    public void SendWorldWithKey(string apiKey)
+    public async  UniTask  SendWorldWithKey(string apiKey)
     {
         if (apiKey.Length != 8)
         {
             Debug.Log("API key is wrong length: " + apiKey.Length  + " Please try again with 8 digits: " + apiKey.Length);
             return;
         }
-        SendDataAsync(apiKey);
+       await SendDataAsync(apiKey);
     }
 
     
-    private async UniTaskVoid FetchAndUpdateDataAsync(string apiKey)
+    private async UniTask  FetchAndUpdateDataAsync(string apiKey)
     {
     
         Debug.Log("[APIHandler] Starting data fetch...");
@@ -62,7 +64,7 @@ public class APIHandler : ScriptableObject
             webRequest.Dispose();
         }
     } 
-    public async UniTaskVoid SendDataAsync(string apiKey)
+    private async UniTask SendDataAsync(string apiKey)
     {
         World world = RootControl.World;
 
