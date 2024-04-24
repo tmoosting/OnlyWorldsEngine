@@ -288,7 +288,16 @@ private void BuildWindow()
 
   
     Texture2D mapTexture =  RootMap.GetActiveMapTexture();
-    _mapScaleContainer = new MapScaleContainer(new Vector2(mapTexture.width, mapTexture.height));
+    if (mapTexture == null)
+    {
+        _mapScaleContainer = new MapScaleContainer(new Vector2(200,200));
+
+    }
+    else
+    {
+        _mapScaleContainer = new MapScaleContainer(new Vector2(mapTexture.width, mapTexture.height));
+
+    }
     _mapRoot.Add(_mapScaleContainer);
     rootVisualElement.Add(_mapRoot);
     LoadMapImage(); 
@@ -418,6 +427,7 @@ private void UpdateMapScaleContainerSize()
 {
     // Update the base size of the MapScaleContainer according to the size of the map texture
     Texture2D mapTexture = RootMap.GetActiveMapTexture();
+    if (mapTexture != null)
     _mapScaleContainer._baseSize = new Vector2(mapTexture.width, mapTexture.height);
 
     // After the base size change, it's necessary to resize the container again to fit it into the parent

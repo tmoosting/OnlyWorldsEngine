@@ -78,11 +78,14 @@ using System;
                         command.Parameters.Add(new SqliteParameter(parameter.Key, parameter.Value));
                     }
                 }
-                Debug.Log("queryyyy:" + query); 
+                Debug.Log("queryyyy:" + query);
 
-       if (query.Substring(0,6) != "DELETE")
+                if (query.Substring(0, 6) != "DELETE")
+                {
                     Debug.Log("query:" + query); 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
+               
             }
             connection.Close(); 
         }
@@ -118,10 +121,7 @@ public void WriteElement(Element element)
 
         var properties = element.GetType().GetProperties()
             .Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
-        foreach (var colname in columnNames)
-        {
-            Debug.Log("columnNames: " +columnNames); 
-        }
+     
         foreach (var propname in properties)
         {
             Debug.Log("propname: " +propname.Name.ToSnakeCase()); 

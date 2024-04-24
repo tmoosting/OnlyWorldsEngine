@@ -201,9 +201,9 @@ public class WorldParser : ScriptableObject
  
                 Element.Category categoryCategory;
                 Enum.TryParse<Element.Category>(propName, out categoryCategory); 
-  
+                Debug.Log("Attempt save: " + categoryCategory);
                 dbWriter.FlushTable(categoryCategory);
-
+                
                 foreach (Element element in elements)
                     dbWriter.WriteElement(element);
             }
