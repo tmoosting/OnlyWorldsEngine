@@ -6,6 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using World_Model;
+using Object = World_Model.Elements.Object;
 
 
 // Responsible for map, pin, pinelement:  creation, management, linking
@@ -34,7 +36,7 @@ public class RootMap : ScriptableObject
     public bool showNameFlags = true;
     public bool constantPinScale = true;
     [Tooltip("Zoomscales are three levels, the lowest of which get obscured at certain zoom-out thresholds")]
-    public bool useZoomscales = true;
+    public bool useZoomscales = false;
     public float pinColoringSize = 20f;
     public float pinScaling = 1f;
     public float pinMinScaling = 0.1f;
@@ -86,7 +88,7 @@ public class RootMap : ScriptableObject
         highlightMode = false;
         pinScaling = 1f;
         filterMode = RootMap.FilterMode.None;
-        includedElementTables = new List<Element.Table>();
+        includedElementTables = new List<Element.Category>();
     }
 
     public List<string> GetUnpinnedMapNames()
@@ -151,14 +153,14 @@ public class RootMap : ScriptableObject
             Debug.LogWarning("! No pinBannerSprite assigned!");
         return pinBannerSprite;
     }
-    public Sprite GetPinCenterIconSprite(Element.Table table)
+    public Sprite GetPinCenterIconSprite(Element.Category category)
     {
-        return RootControl.RootView.GetSelectorSprite(table.ToString());
+        return RootControl.RootView.GetSelectorSprite(category.ToString());
     }
     public void CreateElementAndPin(PinElement pinElement, string elementName, string elementType)
     {
-        Element.Table elementTable = (Element.Table)Enum.Parse(typeof(Element.Table), elementType); 
-        Element newElement =  RootControl.RootEdit.CreateElement(elementTable, elementName);
+        Element.Category elementCategory = (Element.Category)Enum.Parse(typeof(Element.Category), elementType); 
+        Element newElement =  RootControl.RootEdit.CreateElement(elementCategory, elementName);
         CreatePin(Pin.Category.Element, newElement.Name, new Vector2( pinElement.relativeX, pinElement.relativeY),newElement.ID );
         RootControl.SetElement(newElement);
     }
@@ -289,7 +291,7 @@ public class RootMap : ScriptableObject
     }
 
     [HideInInspector] public FilterMode filterMode;
-    public List<Element.Table> includedElementTables;
+    public List<Element.Category> includedElementTables;
     
     public void RebuildPinElements()
     {  
@@ -319,7 +321,7 @@ public class RootMap : ScriptableObject
                     }
                     else
                     {
-                        if (activePinElement.pin.category == Pin.Category.Element && includedElementTables.Contains( GetElementForPin(activePinElement.pin).table))
+                        if (activePinElement.pin.category == Pin.Category.Element && includedElementTables.Contains( GetElementForPin(activePinElement.pin).category))
                             activePinElement.SetTransparencyFull();
                         else
                             activePinElement.SetTransparencyHidden();
@@ -420,7 +422,7 @@ public class RootMap : ScriptableObject
         Map map = RootControl.Map;
         map.Name = mapName;
         map.type = mapType;
-        map.TypeString = mapType.ToString();
+        map.Supertype = mapType.ToString();
         /*if (mapParent != "" && mapParent != "None")
             map.ParentMap =mapParent;*/
         map.BackgroundColor = ColorToHexString( color);
@@ -507,9 +509,8 @@ public class RootMap : ScriptableObject
     {
         if (mapID == null)
         {
-            if (RootControl.Map == null)
-                Debug.LogWarning("!Attempting to infer Map but none is active! Error!");
-            mapID = RootControl.Map.ID;
+     //       if (RootControl.Map.ID == null)
+                return false; 
         }
         foreach (var worldPin in RootControl.GetPinsForCurrentMap())
             if (worldPin.Element == element.ID) 

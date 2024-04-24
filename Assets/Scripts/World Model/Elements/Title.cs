@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Title  : Element
+namespace World_Model.Elements
 {
-
-    public Title()
+    public class Title  : Element
     {
-        this.table = Element.Table.Title;
-    }
 
+        public Title()
+        {
+            this.category = Element.Category.Title;
+        }
+
+    }
 }

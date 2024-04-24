@@ -6,7 +6,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UIElements; 
+using UnityEngine.UIElements;
+using World_Model;
 
 // creation zone for custom elements
 
@@ -647,15 +648,16 @@ public class ResultRowElement : VisualElement
         _iconElement.style.width = RootControl.RootView.ResultRowIconSize;
         _iconElement.style.height = RootControl.RootView.ResultRowIconSize; 
         _iconElement.style.marginLeft = RootControl.RootView.ResultRowIconMargin;
-        _iconElement.style.backgroundImage = new StyleBackground(RootControl.RootView.GetSelectorSprite(element.table.ToString()).texture);
-        if (RootControl.RootMap.DoesElementHavePinOnMap(element))
-        {
-            _pinElement.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinWhiteSprite.texture);
-            _pinElement.style.visibility = new StyleEnum<Visibility>(Visibility.Visible);
-            _pinElement.style.width = RootControl.RootView.ResultRowIconSize;
-            _pinElement.style.height = RootControl.RootView.ResultRowIconSize;
-            _pinElement.style.marginRight = 2f;
-        }
+        _iconElement.style.backgroundImage = new StyleBackground(RootControl.RootView.GetSelectorSprite(element.category.ToString()).texture);
+        if (RootControl.Map != null)
+            if (RootControl.RootMap.DoesElementHavePinOnMap(element))
+            {
+                _pinElement.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinWhiteSprite.texture);
+                _pinElement.style.visibility = new StyleEnum<Visibility>(Visibility.Visible);
+                _pinElement.style.width = RootControl.RootView.ResultRowIconSize;
+                _pinElement.style.height = RootControl.RootView.ResultRowIconSize;
+                _pinElement.style.marginRight = 2f;
+            }
 
         ResetStyle();
     }
@@ -732,7 +734,7 @@ public class ResultRowPin : VisualElement
         {
             _iconCategory.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinRowIconElement.texture);
             _iconElement.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
-            _iconElement.style.backgroundImage = new StyleBackground(RootControl.RootView.GetSelectorSprite(  RootControl.RootMap.GetElementForPin(pin).table.ToString()).texture);
+            _iconElement.style.backgroundImage = new StyleBackground(RootControl.RootView.GetSelectorSprite(  RootControl.RootMap.GetElementForPin(pin).category.ToString()).texture);
          }
         else if (pin.category == Pin.Category.Descriptive)
             _iconCategory.style.backgroundImage = new StyleBackground(RootControl.RootMap.pinRowIconDescriptive.texture);
@@ -1064,14 +1066,14 @@ public class CategorySelector : Selector
         name = givenName;
         iconSprite = givenSprite;
 
-        Element.Table table = (Element.Table)Enum.Parse(typeof(Element.Table), givenName);
+        Element.Category category = (Element.Category)Enum.Parse(typeof(Element.Category), givenName);
         
         string    tooltipString = "";
         if (RootControl.infoMode)
             tooltipString+=  "- Left Click to de/activate" +
                              "\n- Right Click to solo activate / activate column" +
                              "\n- Middle Click to hide row\n";
-        tooltipString += RootControl.DBReader.GetElementMetaDescription(table);
+        tooltipString += RootControl.DBReader.GetElementMetaDescription(category);
         this.tooltip = tooltipString;
         
         MakeStylish();
@@ -1194,7 +1196,7 @@ public class ElementSelector : Selector
         name = givenName;
         iconSprite = givenSprite;
         
-        Element.Table table = (Element.Table)Enum.Parse(typeof(Element.Table), givenName);
+        Element.Category category = (Element.Category)Enum.Parse(typeof(Element.Category), givenName);
         string tooltipString = "";
 
      
@@ -1203,7 +1205,7 @@ public class ElementSelector : Selector
             tooltipString+=   "- Left Click to de/activate" +
                               "\n- Right Click to solo activate" +
                               "\n- Middle Click to hide row\n";
-        tooltipString += RootControl.DBReader.GetElementMetaDescription(table);
+        tooltipString += RootControl.DBReader.GetElementMetaDescription(category);
         this.tooltip = tooltipString;
 
         MakeStylish();

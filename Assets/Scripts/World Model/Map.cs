@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+using Object = World_Model.Elements.Object;
 
 
 public class Map
@@ -20,7 +20,7 @@ public class Map
     
     public string ID{ get; set; }
     public string Name{ get; set; }
-    public string TypeString{ get; set; }
+    public string Supertype{ get; set; }
     public string Subtype{ get; set; }
     public string Description{ get; set; }
     public string FileName{ get; set; }
@@ -39,7 +39,7 @@ public class Map
     {
         ID = System.Guid.NewGuid().ToString();
         Name = mapName;
-        TypeString = "Undefined";
+        Supertype = "Undefined";
         Subtype = "Undefined";
         FileName = fileName;
         BackgroundColor = "#383838";
@@ -55,7 +55,7 @@ public class Map
         get
         {
             if (_monoLoader == null)
-                _monoLoader = Object.FindObjectOfType<MonoLoader>(true);
+                _monoLoader = UnityEngine.Object.FindObjectOfType<MonoLoader>(true);
             if (_monoLoader == null)
                 Debug.LogWarning("! No MonoLoader GameObject found. Please re-load the tool from Launcher.");
             return _monoLoader;

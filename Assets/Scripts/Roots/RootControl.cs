@@ -9,7 +9,9 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
+using World_Model;
+using Object = World_Model.Elements.Object;
+
  
 
 
@@ -193,7 +195,7 @@ public class RootControl : ScriptableObject
 
     public delegate void WindowRefreshHandler();
     public delegate void WorldChangedHandler(World newWorld);
-    public delegate void TableChangedHandler(Element.Table newTable);
+    public delegate void TableChangedHandler(Element.Category newCategory);
     public delegate void ElementChangedHandler(Element newElement);
     public delegate void ElementEditedHandler(Element newElement);
    // public delegate void FieldChangedHandler(Field newField);
@@ -266,24 +268,24 @@ public class RootControl : ScriptableObject
         skipNextWorldInvoke = skipInvoke;
         World = world;
     }
-    private Element.Table _table;
-    public Element.Table Table
+    private Element.Category _category;
+    public Element.Category Category
     {
-        get { return _table; }
+        get { return _category; }
         private  set
         {
-            _table = value; 
+            _category = value; 
             if (skipNextTableInvoke)
                 skipNextPinInvoke = false;
             else 
-                OnTableChanged?.Invoke(_table);
+                OnTableChanged?.Invoke(_category);
         }
     }
     private bool skipNextTableInvoke = false;
-    public void SetTable(Element.Table table, bool skipInvoke = false)
+    public void SetTable(Element.Category category, bool skipInvoke = false)
     {
         skipNextTableInvoke = skipInvoke;
-        Table =table;
+        Category =category;
     }
     private Element _element;
     public Element Element
@@ -406,7 +408,7 @@ public class RootControl : ScriptableObject
         List<Element> returnList = new List<Element>();
 
         // Loop through all the values in the Table enum
-        foreach (Element.Table table in Enum.GetValues(typeof(Element.Table)))
+        foreach (Element.Category table in Enum.GetValues(typeof(Element.Category)))
         {
             var elementsFromTable =  GetElementsOfTable(table);
             if (elementsFromTable != null)
@@ -415,48 +417,48 @@ public class RootControl : ScriptableObject
         return returnList;
     }
 
-    public List<Element> GetElementsOfTable(Element.Table table)
+    public List<Element> GetElementsOfTable(Element.Category category)
     { 
-        switch (table)
+        switch (category)
         {
-            case Element.Table.Character:
-                return World.Characters.Cast<Element>().ToList();
-            case Element.Table.God:
-                return World.Gods.Cast<Element>().ToList();
-            case Element.Table.Event:
-                return World.Events.Cast<Element>().ToList();
-            case Element.Table.Relation:
-                return World.Relations.Cast<Element>().ToList();
-            case Element.Table.Collective:
-                return World.Collectives.Cast<Element>().ToList();
-            case Element.Table.Concept:
-                return World.Concepts.Cast<Element>().ToList();
-            case Element.Table.Creature:
-                return World.Creatures.Cast<Element>().ToList();
-            case Element.Table.Location:
-                return World.Locations.Cast<Element>().ToList();
-            case Element.Table.Matter:
-                return World.Matters.Cast<Element>().ToList();
-            case Element.Table.Institution:
-                return World.Institutions.Cast<Element>().ToList();
-            case Element.Table.Territory:
-                return World.Territorys.Cast<Element>().ToList();
-            case Element.Table.Title:
-                return World.Titles.Cast<Element>().ToList();
-            case Element.Table.Race:
-                return World.Races.Cast<Element>().ToList();
-            case Element.Table.Family:
-                return World.Familys.Cast<Element>().ToList();  
-            case Element.Table.Trait:
-                return World.Traits.Cast<Element>().ToList();
-            case Element.Table.Law:
-                return World.Laws.Cast<Element>().ToList();  
-            case Element.Table.Language:
-                return World.Languages.Cast<Element>().ToList();        
-            case Element.Table.Ability:
-                return World.Abilitys.Cast<Element>().ToList();
+            case Element.Category.Character:
+                return World.CharacterList.Cast<Element>().ToList();
+            case Element.Category.Phenomenon:
+                return World.PhenomenonList.Cast<Element>().ToList();
+            case Element.Category.Event:
+                return World.EventList.Cast<Element>().ToList();
+            case Element.Category.Relation:
+                return World.RelationList.Cast<Element>().ToList();
+            case Element.Category.Collective:
+                return World.CollectiveList.Cast<Element>().ToList();
+            case Element.Category.Construct:
+                return World.ConstructList.Cast<Element>().ToList();
+            case Element.Category.Creature:
+                return World.CreatureList.Cast<Element>().ToList();
+            case Element.Category.Location:
+                return World.LocationList.Cast<Element>().ToList();
+            case Element.Category.Object:
+                return World.ObjectList.Cast<Element>().ToList();
+            case Element.Category.Institution:
+                return World.InstitutionList.Cast<Element>().ToList();
+            case Element.Category.Territory:
+                return World.TerritoryList.Cast<Element>().ToList();
+            case Element.Category.Title:
+                return World.TitleList.Cast<Element>().ToList();
+            case Element.Category.Species:
+                return World.SpeciesList.Cast<Element>().ToList();
+            case Element.Category.Family:
+                return World.FamilyList.Cast<Element>().ToList();  
+            case Element.Category.Trait:
+                return World.TraitList.Cast<Element>().ToList();
+            case Element.Category.Law:
+                return World.LawList.Cast<Element>().ToList();  
+            case Element.Category.Language:
+                return World.LanguageList.Cast<Element>().ToList();        
+            case Element.Category.Ability:
+                return World.AbilityList.Cast<Element>().ToList();
             default:
-                Debug.LogError($"Unsupported table: {table}");
+                Debug.LogError($"Unsupported table: {category}");
                 return null;
         }
     }
@@ -489,7 +491,7 @@ public class RootControl : ScriptableObject
     private void VerifyEnvironment()
     {
         // Check for correct scene existing and loaded first
-        var asset = AssetDatabase.LoadAssetAtPath<Object>("Assets/Scenes/OnlyWorlds.unity");
+        var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets/Scenes/OnlyWorlds.unity");
 
         if (asset == null)
         {
@@ -557,7 +559,7 @@ public class RootControl : ScriptableObject
         string str = "";  
         string actualPath = MonoLoader.projectPath + filePath; 
         
-        var asset = AssetDatabase.LoadAssetAtPath<Object>(actualPath);
+        var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(actualPath);
 
         if (asset == null)  
         { 
@@ -603,7 +605,23 @@ public class RootControl : ScriptableObject
             Debug.LogWarning("! No DBReader found. Please re-load the tool from Launcher.");
         return dbReader;
     }
-    
+    private APIHandler _apiHandler;
+    public APIHandler APIHandler
+    {
+        get
+        {
+            if (_apiHandler == null)
+                _apiHandler = LoadAPIHandler();
+            return _apiHandler;
+        }
+    }
+    private APIHandler LoadAPIHandler()
+    {
+        APIHandler apiHandler = AssetDatabase.LoadAssetAtPath<APIHandler>(MonoLoader.projectPath+MonoLoader.rootPath+"APIHandler.asset");
+        if (apiHandler == null)
+            Debug.LogWarning("! No APIHandler found. Please re-load the tool from Launcher.");
+        return apiHandler;
+    }
     private DBWriter _dbWriter;
     public DBWriter DBWriter
     {

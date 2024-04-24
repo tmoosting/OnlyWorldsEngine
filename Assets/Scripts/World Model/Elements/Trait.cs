@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Trait : Element
+namespace World_Model.Elements
 {
-    public Trait()
+    public class Trait : Element
     {
-        this.table = Element.Table.Trait;
+        public Trait()
+        {
+            this.category = Element.Category.Trait;
+        }
     }
 }

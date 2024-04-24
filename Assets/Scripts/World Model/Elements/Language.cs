@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Language : Element
+namespace World_Model.Elements
 {
-    public Language()
+    public class Language : Element
     {
-        this.table = Element.Table.Language;
+        public Language()
+        {
+            this.category = Element.Category.Language;
+        }
     }
 }

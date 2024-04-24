@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Collective : Element
+namespace World_Model.Elements
 {
+    public class Collective : Element
+    {
 
    
-    public Collective()
-    {
-        this.table = Element.Table.Collective;
-    }
+        public Collective()
+        {
+            this.category = Element.Category.Collective;
+        }
     
+    }
 }

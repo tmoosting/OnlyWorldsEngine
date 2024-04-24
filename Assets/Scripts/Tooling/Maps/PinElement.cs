@@ -132,7 +132,7 @@ private IEnumerator   SelectColorAfterDelay()
         if (pin.category == Pin.Category.Element)
         { 
             //    iconElement.style.backgroundImage = new StyleBackground(RootMap.pinRowIconElement);  // todo proper toggling and sprites etc 
-         iconElement.style.backgroundImage = new StyleBackground(RootMap.GetPinCenterIconSprite(RootMap.GetElementForPin(pin).table).texture);
+         iconElement.style.backgroundImage = new StyleBackground(RootMap.GetPinCenterIconSprite(RootMap.GetElementForPin(pin).category).texture);
         } 
         else if (pin.category == Pin.Category.Map)
             iconElement.style.backgroundImage = new StyleBackground(RootMap.pinRowIconMap);

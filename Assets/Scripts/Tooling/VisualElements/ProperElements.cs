@@ -108,8 +108,6 @@ public class BlueDropdownField : VisualElement
     public BlueDropdown Dropdown;
     public string baseString;
     private Label textLabel;
-
-
     
     public BlueDropdownField(RootControl rootControl, string labelText,  float parentWidth, Action<string> OnValueChange)
     {
@@ -159,9 +157,7 @@ public class BlueDropdown : DropdownField
         this.style.width = minWidth;
         this.style.height = RootControl.EditFieldHeight;
 
-        this.style.unityFontStyleAndWeight = new StyleEnum<FontStyle>(FontStyle.Bold);
-   
-        
+        this.style.unityFontStyleAndWeight = new StyleEnum<FontStyle>(FontStyle.Bold); 
       
         float borderSize =0f;
         Color borderColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
@@ -429,9 +425,7 @@ public class ReferenceSlider : Slider
             if (signalAllowed)
                EditorCoroutineUtility.StartCoroutineOwnerless(AttemptValueChange(onValueChange));   
 
-        });//
-        
-       
+        });
     }
     private IEnumerator AttemptValueChange(Action<float> onValueChange)
     {

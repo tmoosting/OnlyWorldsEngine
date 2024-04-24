@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Creature  : Element
+namespace World_Model.Elements
 {
-
-    public Creature()
+    public class Creature  : Element
     {
-        this.table = Element.Table.Creature;
-    }
 
+        public Creature()
+        {
+            this.category = Element.Category.Creature;
+        }
+
+    }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World_Model;
 using Object = UnityEngine.Object;
 
 public class MapScreen : VisualElement
@@ -160,8 +161,8 @@ public class MapScreen : VisualElement
 
         elementMaskField = new SquareMaskField(RootControl, "ElementMaskField", OnElementMaskFieldChange);
         elementMaskField.style.width = Length.Percent(95);
-        elementMaskField.choices = Enum.GetNames(typeof (Element.Table)).ToList();
-        var allValues = Enum.GetValues(typeof(Element.Table)).Cast<Element.Table>().Aggregate((current, next) => current | next);
+        elementMaskField.choices = Enum.GetNames(typeof (Element.Category)).ToList();
+        var allValues = Enum.GetValues(typeof(Element.Category)).Cast<Element.Category>().Aggregate((current, next) => current | next);
         int allValuesInt = (int)allValues;
         elementMaskField.value = allValuesInt; 
     
@@ -239,12 +240,12 @@ public class MapScreen : VisualElement
     private List<Pin> FilterElementPins()
     {
         List<Pin> tempList = new List<Pin>();
-        List<Element.Table> activeList = GetActiveElementsFromMaskField(); 
+        List<Element.Category> activeList = GetActiveElementsFromMaskField(); 
         foreach (var pin in pins)
         {
             if (pin.category == Pin.Category.Element)
             {
-                if ((elementMaskField.value & (int)RootMap.GetElementForPin(pin).table) != 0)
+                if ((elementMaskField.value & (int)RootMap.GetElementForPin(pin).category) != 0)
                     tempList.Add(pin);
             }
             else
@@ -262,10 +263,10 @@ public class MapScreen : VisualElement
         else
             pinMaskFieldBar.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
     }
-    private List<Element.Table> GetActiveElementsFromMaskField()
+    private List<Element.Category> GetActiveElementsFromMaskField()
     {
-        List<Element.Table> activeElements = new List<Element.Table>();
-        foreach (Element.Table element in Enum.GetValues(typeof(Element.Table)))
+        List<Element.Category> activeElements = new List<Element.Category>();
+        foreach (Element.Category element in Enum.GetValues(typeof(Element.Category)))
             if ((elementMaskField.value & (int)element) != 0)
                 activeElements.Add(element);
         return activeElements;
@@ -338,6 +339,8 @@ public class MapScreen : VisualElement
         void BindItem(VisualElement e, int i)
         {
             ResultRowPin row = (ResultRowPin)e;
+            if (pins == null)
+                return;
             Pin pin = pins[i];
             row.UploadPin(pin, RootControl, i);
 

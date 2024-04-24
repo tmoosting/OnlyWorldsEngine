@@ -21,6 +21,9 @@ public class Launcher : EditorWindow
     private Button buttonLoadLayout;
     private Button buttonLoadWorld;
     private Button buttonSaveWorld;
+    private Button buttonFetch;
+    private Button buttonSend;
+    private TextField worldKeyTextField;
    
     #region Instancing
     private static Launcher _instance;
@@ -107,6 +110,9 @@ public class Launcher : EditorWindow
         buttonLoadLayout =   _uxmlRoot.Q<Button>("buttonLoadLayout"); 
         buttonLoadWorld =   _uxmlRoot.Q<Button>("buttonLoadWorld"); 
         buttonSaveWorld =   _uxmlRoot.Q<Button>("buttonSaveWorld"); 
+        buttonFetch =   _uxmlRoot.Q<Button>("buttonFetch"); 
+        buttonSend =   _uxmlRoot.Q<Button>("buttonSend"); 
+        worldKeyTextField =   _uxmlRoot.Q<TextField>("worldKeyTextField"); 
     }
 
     private void VisualElementsLogic()
@@ -118,7 +124,9 @@ public class Launcher : EditorWindow
     private void DropdownLogic()
     {
         var worldNames = RootControl.WorldParser.GetWorldsFileNames();
-        
+
+        if (worldNames.Contains("Default"))
+            worldNames.Remove("Default");
         dropdownFieldWorlds.choices = worldNames;
         if (worldNames.Count > 0)
             dropdownFieldWorlds.value = worldNames[0];
@@ -136,10 +144,27 @@ public class Launcher : EditorWindow
         buttonSaveWorld.clicked -= ClickButtonSaveWorld;
         buttonSaveWorld.clicked += ClickButtonSaveWorld;      
         buttonLoadLayout.clicked -= ClickButtonLoadLayout;
-        buttonLoadLayout.clicked += ClickButtonLoadLayout;
+        buttonLoadLayout.clicked += ClickButtonLoadLayout;  
+         
+        buttonFetch.clicked -= ClickButtonFetch;
+        buttonFetch.clicked += ClickButtonFetch;     
+        buttonSend.clicked -= ClickButtonSend;
+        buttonSend.clicked += ClickButtonSend;
 
     }
-
+    private void ClickButtonFetch()
+    {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        RootControl.APIHandler.FetchWorldWithKey(worldKeyTextField.value, dropdownFieldWorlds.value);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+    }
+    private void ClickButtonSend ()
+    { 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        RootControl.APIHandler.SendWorldWithKey(worldKeyTextField.value); 
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+     
+    }
     private bool AreRootWindowsOpen()
     {
         return (IsWindowOpen<ViewWindow>() && IsWindowOpen<EditWindow>() && IsWindowOpen<MapWindow>() && IsWindowOpen<TimelineWindow>());
@@ -199,5 +224,6 @@ public class Launcher : EditorWindow
             Debug.LogWarning("! No RootControl found. Please re-load the tool from Launcher.");
         return rootControl;
     }
-    
-}
+
+
+   }

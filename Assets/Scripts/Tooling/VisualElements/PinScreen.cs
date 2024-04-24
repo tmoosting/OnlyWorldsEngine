@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World_Model;
+using World_Model.Elements;
+using Object = World_Model.Elements.Object;
 
 // pin window content for when an existing pin is selected
 
@@ -215,13 +218,13 @@ public class PinScreen : VisualElement
         adaptiveContent.Add(nameFrontLabel);
 
         var elementLabel = new Label(element.Name);
-        FrontLabel elementFrontLabel = new FrontLabel(RootControl, false,element.table.ToString(), elementLabel);
+        FrontLabel elementFrontLabel = new FrontLabel(RootControl, false,element.category.ToString(), elementLabel);
         elementFrontLabel.style.marginBottom = 5f;
         elementFrontLabel.style.marginLeft = 1f;
         
         adaptiveContent.Add(elementFrontLabel);
 
-        if (element.table == Element.Table.Location)
+        if (element.category == Element.Category.Location)
         {
             Location loc = element as Location;
 
@@ -309,7 +312,7 @@ public class PinScreen : VisualElement
         nameFrontLabel.style.marginLeft = 1f;
         adaptiveContent.Add(nameFrontLabel);
         
-        SquareDropdown mapDropdown = new SquareDropdown(RootControl, "maDropdown", OnPinnedMapDropdownChange);
+        SquareDropdown mapDropdown = new SquareDropdown(RootControl, "mapDropdown", OnPinnedMapDropdownChange);
         FrontLabel dropdownFrontLabel = new FrontLabel(RootControl, true,"Pinned Map", mapDropdown);
         dropdownFrontLabel.style.marginBottom = 3f;
         dropdownFrontLabel.style.marginLeft = 1f;
@@ -432,7 +435,7 @@ public class PinScreen : VisualElement
         get
         {
             if (_monoLoader == null)
-                _monoLoader = Object.FindObjectOfType<MonoLoader>(true);
+                _monoLoader = UnityEngine.Object.FindObjectOfType<MonoLoader>(true);
             if (_monoLoader == null)
                 Debug.LogWarning("! No MonoLoader GameObject found. Please re-load the tool from Launcher.");
             return _monoLoader;
