@@ -469,6 +469,9 @@ public class RootControl : ScriptableObject
     #region State and Storage Logic
     public void IntervalBackup()
     {
+        if (MonoLoader == null)
+            return;
+        
         if (MonoLoader.intervalSaveEnabled == false)
             return;
         if (worldState is not (WorldState.Loaded or WorldState.Unsaved))
@@ -583,7 +586,7 @@ public class RootControl : ScriptableObject
             if (_monoLoader == null)
                 _monoLoader = FindObjectOfType<MonoLoader>();
             if (_monoLoader == null)
-                Debug.LogWarning("! No MonoLoader GameObject found. Please re-load the tool from Launcher.");
+                Debug.LogWarning("! No MonoLoader GameObject found. Please open Assets/Scenes/OnlyWorlds");
             return _monoLoader;
         }
     }     

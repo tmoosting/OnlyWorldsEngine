@@ -15,9 +15,9 @@ public class APIHandler : ScriptableObject
     
     public async  UniTask FetchWorldWithKey(string apiKey, string worldName)
     {
-        if (apiKey.Length != 8)
+        if (apiKey.Length != 10)
         {
-            Debug.Log("API key is wrong length: " + apiKey.Length  + " Please try again with 8 digits: " + apiKey.Length);
+            Debug.Log("API key is wrong length. Please try again with 10 digits instead of " + apiKey.Length);
             return;
         } 
      await FetchAndUpdateDataAsync(apiKey);
@@ -26,9 +26,9 @@ public class APIHandler : ScriptableObject
     }
     public async  UniTask  SendWorldWithKey(string apiKey)
     {
-        if (apiKey.Length != 8)
+        if (apiKey.Length != 10)
         {
-            Debug.Log("API key is wrong length: " + apiKey.Length  + " Please try again with 8 digits: " + apiKey.Length);
+            Debug.Log("API key is wrong length. Please try again with 10 digits instead of " + apiKey.Length);
             return;
         }
        await SendDataAsync(apiKey);
